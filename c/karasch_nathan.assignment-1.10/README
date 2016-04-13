@@ -1,0 +1,29 @@
+Assignment 1.10
+
+Authors:
+  - Nathan Karasch (nkarasch@iastate.edu)
+
+Files:
+  - CHANGELOG
+  - Makefile
+  - .projectile
+  - README
+  - nextbus.cpp
+
+Compiling:
+  - $ make
+
+Programs:
+
+nextbus
+  - Description:
+      This program interfaces with a database to display NextBus
+      information for CyRide in Ames, IA. It can return bus route
+      information in a variety of formats, based on user input of
+      route, stop, etc. The user is also able to configure the
+      program so that they can quickly find out the time of the
+      next bus heading home or the time of the next bus heading
+      to school/work without having to manually type all the
+      optional parameters.
+  - Usage:
+      ./nextbus
