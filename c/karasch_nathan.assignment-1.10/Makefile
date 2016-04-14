@@ -8,7 +8,7 @@ CXXFLAGS = -Wall -Wno-sign-compare -ggdb -funroll-loops
 LDFLAGS = -lncurses
 
 BIN = nextbus
-OBJS = nextbus.o
+OBJS = nextbus.o config.o io.o
 
 all: $(BIN) etags
 
