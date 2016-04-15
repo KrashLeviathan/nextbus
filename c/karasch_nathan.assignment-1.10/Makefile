@@ -5,10 +5,10 @@ RM = rm -f
 
 CFLAGS = -Wall -ggdb -funroll-loops
 CXXFLAGS = -Wall -Wno-sign-compare -ggdb -funroll-loops
-LDFLAGS = -lncurses
+LDFLAGS = -lcurl
 
 BIN = nextbus
-OBJS = nextbus.o config.o io.o
+OBJS = nextbus.o config.o io.o connection.o curlplusplus.o
 
 all: $(BIN) etags
 
