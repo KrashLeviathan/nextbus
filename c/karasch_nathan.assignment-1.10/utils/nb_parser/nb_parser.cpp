@@ -4,7 +4,10 @@
 #include "route_parser.h"
 
 void gdb_test(RouteParser parser) {
-  // std::cout << parser.routes[0]->to_string() << std::endl;
+  int i;
+  for (i = 0; i < parser.routes.size(); i++) {
+    std::cout << parser.routes[i]->to_string() << std::endl;
+  }
 }
 
 int main(int argc, char *argv[]) {
@@ -19,7 +22,5 @@ int main(int argc, char *argv[]) {
 
   gdb_test(parser);
 
-  std::cout << "Done" << std::endl;
-  
   return 0;
 }

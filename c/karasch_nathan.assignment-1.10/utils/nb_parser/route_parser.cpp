@@ -4,15 +4,6 @@
 #include "route_parser.h"
 #include "route.h"
 
-static void PRINT(const char *str) {
-  std::cout << str << std::endl;
-}
-
-void RouteParser::breakpoint() {
-  // TODO: Remove me when finished.
-  std::cout << substring << std::endl;
-}
-
 static char key_from_string(std::string *str) {
   if (!str->compare("tag")) {
     return ATTR_TAG;
@@ -124,7 +115,6 @@ void RouteParser::parse_element_open() {
       if (c == ' ' || c == '>') {
 	if (!substring.compare("route")) {
 	  // Route complete
-	  breakpoint();
 	  routes.push_back(tempRoute);
 	} else if (!substring.compare("stop")) {
 	  // Stop complete

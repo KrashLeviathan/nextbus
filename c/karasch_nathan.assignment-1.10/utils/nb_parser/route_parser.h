@@ -14,7 +14,6 @@
 
 class RouteParser : public XmlParser {
  private:
-  void breakpoint(); // FIXME
   Route *tempRoute;
   Stop *tempStop;
   Direction *tempDirection;
