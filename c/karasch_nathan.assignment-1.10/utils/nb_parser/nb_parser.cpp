@@ -1,7 +1,11 @@
 #include <iostream>
 #include <string>
 #include "io.h"
-#include "route_config_parser.h"
+#include "route_parser.h"
+
+void gdb_test(RouteParser parser) {
+  // std::cout << parser.routes[0]->to_string() << std::endl;
+}
 
 int main(int argc, char *argv[]) {
   std::string filepath;
@@ -10,10 +14,12 @@ int main(int argc, char *argv[]) {
   // Test RouteConfigParser creation
   filepath = get_filepath("routeConfig.xml");
   textToParse = get_file_contents(filepath);
-  RouteConfigParser parser (textToParse);
-  std::string *voidPointer;
-  voidPointer = static_cast<std::string *>(parser.next("Type of object"));
-  std::cout << *voidPointer << std::endl;
+  RouteParser parser (textToParse);
+  parser.parse();
 
+  gdb_test(parser);
+
+  std::cout << "Done" << std::endl;
+  
   return 0;
 }

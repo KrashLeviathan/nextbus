@@ -8,7 +8,7 @@ CXXFLAGS = -Wall -Wno-sign-compare -ggdb -funroll-loops
 LDFLAGS = -lncurses
 
 BIN = nb_parser
-OBJS = nb_parser.o xml_parser.o route_config_parser.o io.o
+OBJS = nb_parser.o xml_parser.o route_parser.o io.o route.o
 
 all: $(BIN) etags
 

@@ -5,10 +5,16 @@
 
 class XmlParser {
  protected:
-  std::string text;
+  char c;
+  std::string substring;
+  std::string pText;
+  std::string *text;
+  int index;
  public:
-  XmlParser(std::string &s) { text = s; }
-  virtual void *next(const char *type);
+  XmlParser(std::string &s) {
+    text = &s;
+    index = 0;
+  }
 };
 
 #endif
