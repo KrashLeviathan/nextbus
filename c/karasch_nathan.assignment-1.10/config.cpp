@@ -56,10 +56,7 @@ ConfigFile::ConfigFile(std::string &file_path) {
     agency = DEFAULT_AGENCY;
     update();
   }
-  print_details();
-  
-  // add_config_stop(file, "home",   "2E", "1123");
-  // add_config_stop(file, "school", "2W", "1077");
+  // print_details();
 }
 
 bool ConfigFile::update() {

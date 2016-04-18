@@ -8,6 +8,7 @@
 
 # define VERSION_NUMBER        "1"
 # define DEFAULT_AGENCY        "cyride"
+# define SEC_PER_DAY           86400
 
 class SavedRouteStop {
  public:

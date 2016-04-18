@@ -7,13 +7,13 @@
 int main(int argc, char *argv[]) {
   std::string filepath;
   std::string xml_string;
-  // CommandLineAction *clAction;
+  CommandLineAction *clAction;
   ConfigFile *configFile;
 
-  // Test the command line argument parser
-  // clAction = parse_arguments(argc, argv);
+  // Parse command line arguments
+  clAction = parse_arguments(argc, argv);
 
-  // Test config file creation
+  // Load settings from the config file
   filepath = get_filepath("config.nextbus");
   configFile = new ConfigFile(filepath);
   
@@ -24,7 +24,8 @@ int main(int argc, char *argv[]) {
 
   // std::cout << xml_string << std::endl;
 
-  // delete clAction;
+  // Cleanup
+  delete clAction;
   delete configFile;
   
   return 0;

@@ -1,4 +1,5 @@
 #include <string>
+#include <sstream>
 #include <vector>
 #include <curl/curl.h>
 #include "connection.h"
@@ -9,37 +10,66 @@ std::string agencyList() {
   return client.Get("http://webservices.nextbus.com/service/publicXMLFeed?command=agencyList");
 }
 
-std::string routeList() {
+std::string routeList(const char *agency) {
   CURLplusplus client;
-  return client.Get("http://webservices.nextbus.com/service/publicXMLFeed?command=routeList&a=cyride");
+  std::stringstream ss;
+  ss << "http://webservices.nextbus.com/service/publicXMLFeed"
+     << "?command=routeList&a=" << agency;
+  return client.Get(ss.str());
 }
 
-std::string routeConfig(const char *routeTag) {
+std::string routeConfig(const char *agency, const char *routeTag) {
   CURLplusplus client;
-  return client.Get("http://webservices.nextbus.com/service/publicXMLFeed?command=routeConfig&a=<agency_tag>&r=<route tag>");
+  std::stringstream ss;
+  ss << "http://webservices.nextbus.com/service/publicXMLFeed"
+     << "?command=routeConfig&a=" << agency
+     << "&r=" << routeTag;
+  return client.Get(ss.str());
 }
 
-std::string predictions(const char *stopTag) {
+std::string predictions(const char *agency, const char *stopTag) {
   CURLplusplus client;
-  return client.Get("http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=<agency_tag>&stopId=<stop id>");
+  std::stringstream ss;
+  ss << "http://webservices.nextbus.com/service/publicXMLFeed"
+     << "?command=predictions&a=" << agency << "&stopId=" << stopTag;
+  return client.Get(ss.str());
 }
 
-std::string predictions(const char *stopTag, const char *routeTag) {
+std::string predictions(const char *agency, const char *stopTag,
+			const char *routeTag) {
   CURLplusplus client;
-  return client.Get("http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=<agency_tag>&stopId=<stop id>&routeTag=<route tag>");
+  std::stringstream ss;
+  ss << "http://webservices.nextbus.com/service/publicXMLFeed"
+     << "?command=predictions&a=" << agency << "&stopId=" << stopTag
+     << "&routeTag=" << routeTag;
+  return client.Get(ss.str());
 }
 
-std::string predictionsForMultiStops(std::vector<std::string> stopTagVector) {
+std::string predictionsForMultiStops(const char *agency,
+				     std::vector<std::string> stopTagVector) {
   CURLplusplus client;
-  return client.Get("http://webservices.nextbus.com/service/publicXMLFeed?command=predictionsForMultiStops&a=<agency_tag>&stops=<stop 1>&stops=<stop 2>&stops=<stop3>");
+  std::stringstream ss;
+  ss << "http://webservices.nextbus.com/service/publicXMLFeed"
+     << "?command=predictionsForMultiStops&a=" << agency
+     << "&stops=<stop 1>&stops=<stop 2>&stops=<stop3>";
+  // TODO
+  return client.Get(ss.str());
 }
 
-std::string schedule(const char *routeTag) {
+std::string schedule(const char *agency, const char *routeTag) {
   CURLplusplus client;
-  return client.Get("http://webservices.nextbus.com/service/publicXMLFeed?command=schedule&a=<agency_tag>&r=<route_tag>");
+  std::stringstream ss;
+  ss << "http://webservices.nextbus.com/service/publicXMLFeed"
+     << "?command=schedule&a=" << agency << "&r=" << routeTag;
+  return client.Get(ss.str());
 }
 
-std::string messages(std::vector<std::string> routeTagVector) {
+std::string messages(const char *agency, std::vector<std::string> routeTagVector) {
   CURLplusplus client;
-  return client.Get("http://webservices.nextbus.com/service/publicXMLFeed?command=messages&a=<agency tag>&r=<route tag1>&r=<route tagN>");
+  std::stringstream ss;
+  ss << "http://webservices.nextbus.com/service/publicXMLFeed"
+     << "?command=messages&a=" << agency
+     << "&r=<route tag1>&r=<route tagN>";
+  // TODO
+  return client.Get(ss.str());
 }
