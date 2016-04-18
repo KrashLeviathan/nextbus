@@ -7,7 +7,7 @@
 
 #define CHECK_HEADING(str) \
     if (!getline(ss,line) || line.compare(str)) { \
-    std::cout << "ERROR parse(): " << line << std::endl; \
+    std::cout << "ERROR: " << line << std::endl; \
     return false; \
   }
 
@@ -37,9 +37,24 @@ ConfigFile::ConfigFile(std::string &file_path) {
   if (!parse()) {
     // The contents were empty or invalid, so initialize
     // a new config file.
+    std::cout
+      << std::endl
+      << "   If this is your first time running nextbus, this is normal!"
+      << std::endl
+      << "   Otherwise, it's possible your config.nextbus file was invalid"
+      << std::endl
+      << "   or corrupted. Use the command line arguments to add new routes,"
+      << std::endl
+      << "   stops, etc safely. If you want to edit the config file manually,"
+      << std::endl
+      << "   do so with caution!"
+      << std::endl << std::endl
+      << "Creating a new config file at "
+      << filepath << std::endl << std::endl;
     lastChange = 0;
     lastRouteDownload = 0;
     agency = DEFAULT_AGENCY;
+    update();
   }
   print_details();
   
@@ -54,7 +69,7 @@ bool ConfigFile::update() {
   file.open(filepath.c_str());
   if (file.is_open()) {
     file << "NextBus Configuration File" << std::endl;
-    file << VERSION_NUMBER << std::endl << std::endl;
+    file << "version " << VERSION_NUMBER << std::endl << std::endl;
     
     file << ":LAST CHANGE" << std::endl;
     file << lastChange << std::endl << std::endl;
