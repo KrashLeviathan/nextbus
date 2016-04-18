@@ -58,6 +58,18 @@ std::string get_file_contents(std::string &filepath) {
   return contents.str();
 }
 
+bool set_file_contents(std::string &filepath, std::string &contents) {
+  std::ofstream file;
+  
+  file.open(filepath.c_str());
+  if (file.is_open()) {
+    file << contents << std::endl;
+    file.close();
+    return true;
+  }
+  return false;
+}
+
 std::string get_filepath(const char *filename) {
   std::string filepath;
   char *path;

@@ -2,6 +2,7 @@
 #include "io.h"
 #include "config.h"
 #include "connection.h"
+#include "route_parser.h"
 
 
 int main(int argc, char *argv[]) {
@@ -17,12 +18,22 @@ int main(int argc, char *argv[]) {
   filepath = get_filepath("config.nextbus");
   configFile = new ConfigFile(filepath);
   
+  // Curl File
+  // xml_string = routeConfig(configFile->agency.c_str(), NULL);
 
-  // Test file curling
-  // agency = DEFAULT_AGENCY;
-  // xml_string = routeList();
+  // Save to File
+  // filepath = get_filepath("routeConfig.xml");
+  // set_file_contents(filepath, xml_string);
 
-  // std::cout << xml_string << std::endl;
+  // Open a File
+  filepath = get_filepath("routeConfig.xml");
+  xml_string = get_file_contents(filepath);
+
+  // After parsing an xml string, the variables in the
+  // RouteParser instance contain all the data pulled
+  // from the xml string.
+  RouteParser parser (xml_string);
+  parser.parse();
 
   // Cleanup
   delete clAction;

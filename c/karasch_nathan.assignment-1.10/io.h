@@ -55,6 +55,7 @@ class CommandLineAction {
 void usage();
 void error(const char *message);
 std::string get_file_contents(std::string &filepath);
+bool set_file_contents(std::string &filepath, std::string &contents);
 std::string get_filepath(const char *filename);
 CommandLineAction *parse_arguments(int argc, char *argv[]);
 
