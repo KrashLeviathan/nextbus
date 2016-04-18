@@ -4,8 +4,6 @@
 # include <string>
 # include <vector>
 
-# define DEFAULT_AGENCY    "cyride"
-
 std::string agencyList();
 std::string routeList();
 std::string routeConfig(const char *routeTag);

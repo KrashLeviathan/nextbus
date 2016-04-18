@@ -7,13 +7,16 @@
 int main(int argc, char *argv[]) {
   std::string filepath;
   std::string xml_string;
-  CommandLineAction *clAction;
+  // CommandLineAction *clAction;
+  ConfigFile *configFile;
 
-  clAction = parse_arguments(argc, argv);
+  // Test the command line argument parser
+  // clAction = parse_arguments(argc, argv);
 
   // Test config file creation
-  // filepath = get_filepath("config.nextbus");
-  // init_config(filepath);
+  filepath = get_filepath("config.nextbus");
+  configFile = new ConfigFile(filepath);
+  
 
   // Test file curling
   // agency = DEFAULT_AGENCY;
@@ -21,7 +24,8 @@ int main(int argc, char *argv[]) {
 
   // std::cout << xml_string << std::endl;
 
-  delete clAction;
+  // delete clAction;
+  delete configFile;
   
   return 0;
 }

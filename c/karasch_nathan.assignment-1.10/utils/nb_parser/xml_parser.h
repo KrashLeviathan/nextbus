@@ -1,5 +1,5 @@
-#ifndef XML_PARSER
-# define XML_PARSER
+#ifndef XML_PARSER_H
+# define XML_PARSER_H
 
 # include <string>
 
