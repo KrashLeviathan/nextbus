@@ -22,6 +22,7 @@ class SavedRouteStop {
     route = r;
     stop = s;
   }
+  SavedRouteStop() {}
 };
 
 class ConfigFile {

@@ -41,6 +41,9 @@ int main(int argc, char *argv[]) {
     // Store agency
     configFile->agency = clAction->agency;
     configFile->update();
+    std::cout << "Configuration Change:" << std::endl
+	      << "   Agency set to '"
+	      << configFile->agency << "'." << std::endl;
   } else if (clAction->actions & ACTION_ROUTE_LIST) {
     // Route list
     filepath = get_filepath("routeList.xml");
@@ -63,6 +66,14 @@ int main(int argc, char *argv[]) {
     // Store route
     configFile->routes.push_back(&clAction->route);
     configFile->update();
+    std::cout << "Configuration Change:" << std::endl
+	      << "   Added route '"
+	      << clAction->route << "'. This route's schedule or "
+	      << std::endl
+	      << "   messages will display with the command line arguments "
+	      << std::endl
+	      << "   [-s|--schedules] or [-m|--messages], respectively."
+	      << std::endl;
   } else if (clAction->actions & ACTION_SCHEDULE_LIST) {
     // Schedules
     if (configFile->routes.size() == 0) {
@@ -129,7 +140,7 @@ int main(int argc, char *argv[]) {
 				    clAction->stop));
     configFile->update();
   } else {
-    error("Unknown CommandLineAction");
+    usage();
   }
 
   // After parsing an xml string, the variables in the

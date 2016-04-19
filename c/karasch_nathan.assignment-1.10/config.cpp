@@ -135,7 +135,7 @@ bool ConfigFile::parse() {
     while (getline(ss, line)) {
       if (line.compare("")) {
 	// If the line is not empty...
-	savedRS = new SavedRouteStop(NULL, NULL, NULL);
+	savedRS = new SavedRouteStop();
 	if (line[0] == '$') {
 	  savedRS->name = line.substr(1, std::string::npos);
 	} else {
