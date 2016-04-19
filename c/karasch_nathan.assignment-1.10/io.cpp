@@ -98,13 +98,12 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
   uint32_t i;
   uint32_t long_arg;
   bool param_complete;
-  Action actions;
   CommandLineAction *cla = new CommandLineAction();
-  
-  actions = 0;
+
+  cla->actions = 0;
   param_complete = false;
 
- if (argc > 1) {
+  if (argc > 1) {
     for (i = 1, long_arg = 0; i < argc; i++, long_arg = 0) {
       if (param_complete) {
 	// A switch and its arguments were already found, yet
@@ -123,7 +122,7 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
               (long_arg && strcmp(argv[i], "-AgencyStore"))) {
             usage();
           }
-	  actions = actions | ACTION_AGENCY_STORE;
+	  cla->actions = cla->actions | ACTION_AGENCY_STORE;
           if ((argc > i + 1) && argv[i + 1][0] != '-') {
             // Argument: agency
 	    cla->agency = argv[++i];
@@ -137,7 +136,7 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
               (long_arg && strcmp(argv[i], "-RouteStore"))) {
             usage();
           }
-	  actions = actions | ACTION_ROUTE_STORE;
+	  cla->actions = cla->actions | ACTION_ROUTE_STORE;
           if ((argc > i + 1) && argv[i + 1][0] != '-') {
             // Argument: route
 	    cla->route = argv[++i];
@@ -151,7 +150,7 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
               (long_arg && strcmp(argv[i], "-predictstop"))) {
             usage();
           }
-	  actions = actions | ACTION_PREDICT_STOP;
+	  cla->actions = cla->actions | ACTION_PREDICT_STOP;
           if ((argc > i + 1) && argv[i + 1][0] != '-') {
             // Argument: stop
 	    cla->stop = argv[++i];
@@ -165,7 +164,7 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
               (long_arg && strcmp(argv[i], "-PredictRoute"))) {
             usage();
           }
-	  actions = actions | ACTION_PREDICT_ROUTE;
+	  cla->actions = cla->actions | ACTION_PREDICT_ROUTE;
           if ((argc > i + 1) && argv[i + 1][0] != '-') {
             // Argument 1: route
 	    cla->route = argv[++i];
@@ -185,7 +184,7 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
               (long_arg && strcmp(argv[i], "-agencies"))) {
             usage();
           }
-          actions = actions | ACTION_AGENCY_LIST;
+          cla->actions = cla->actions | ACTION_AGENCY_LIST;
           break;
         case 'r':
 	  // List all routes
@@ -193,7 +192,7 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
               (long_arg && strcmp(argv[i], "-routes"))) {
             usage();
           }
-	  actions = actions | ACTION_ROUTE_LIST;
+	  cla->actions = cla->actions | ACTION_ROUTE_LIST;
           break;
         case 's':
 	  // List bus schedules
@@ -201,7 +200,7 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
               (long_arg && strcmp(argv[i], "-schedules"))) {
             usage();
           }
-	  actions = actions | ACTION_SCHEDULE_LIST;
+	  cla->actions = cla->actions | ACTION_SCHEDULE_LIST;
           break;
         case 'm':
 	  // List bus messages
@@ -209,7 +208,7 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
               (long_arg && strcmp(argv[i], "-messages"))) {
             usage();
           }
-	  actions = actions | ACTION_MESSAGE_LIST;
+	  cla->actions = cla->actions | ACTION_MESSAGE_LIST;
           break;
 	case 'S':
 	  // Save a custom variable with route & stop info
@@ -217,7 +216,7 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
               (long_arg && strcmp(argv[i], "-Save"))) {
             usage();
           }
-	  actions = actions | ACTION_SAVE_CUSTOM;
+	  cla->actions = cla->actions | ACTION_SAVE_CUSTOM;
           if ((argc > i + 1) && argv[i + 1][0] != '-') {
             // Argument 1: save name
 	    cla->save = argv[++i];
@@ -237,6 +236,22 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
 	    usage();
 	  }
           break;
+	case 'o':
+	  // Force use online data
+          if ((!long_arg && argv[i][2]) ||
+              (long_arg && strcmp(argv[i], "-online"))) {
+            usage();
+          }
+	  cla->actions = cla->actions | ACTION_ONLINE;
+          goto param_not_complete;
+	case 'c':
+	  // Force use cached data
+          if ((!long_arg && argv[i][2]) ||
+              (long_arg && strcmp(argv[i], "-cached"))) {
+            usage();
+          }
+	  cla->actions = cla->actions | ACTION_CACHED;
+          goto param_not_complete;
         default:
           usage();
         }
@@ -244,9 +259,31 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
       } else { /* No dash */
 	// TODO: Take custom variables that were stored in the
 	// config file and fetch route information with them
-        usage();
+	cla->actions = cla->actions | ACTION_USE_SAVED;
+	cla->saveUses.push_back(new std::string(argv[i]));
       }
+    param_not_complete:
+      // Allows you to jump over the `param_complete = true` line
+      // if there is an action that can be combined with other actions
+      std::cout << "";
     }
+  } else {
+    usage();
   }
- return cla;
+  return cla;
+}
+
+std::string CommandLineAction::to_string() {
+  std::stringstream ss;
+  int i;
+  ss << "Agency:  " << agency << std::endl
+     << "Route:   " << route << std::endl
+     << "Stop:    " << stop << std::endl
+     << "Save:    " << save << std::endl
+     << "Actions: " << actions << std::endl 
+     << "Save Uses:" << std::endl;
+  for (i = 0; i < saveUses.size(); i++) {
+    ss << "   " << *saveUses[i] << std::endl;
+  }
+  return ss.str();
 }

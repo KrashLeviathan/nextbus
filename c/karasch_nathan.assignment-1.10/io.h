@@ -16,9 +16,9 @@
 # define ACTION_PREDICT_STOP  0x00000040  // -p --predictstop
 # define ACTION_PREDICT_ROUTE 0x00000080  // -P --PredictRoute
 # define ACTION_SAVE_CUSTOM   0x00000100  // -S --Save
-# define ACTION_ONLINE        0x00000200  // TODO: -o --online
-# define ACTION_CACHED        0x00000400  // TODO: -c --cached
-# define ACTION_BIT11         0x00000800
+# define ACTION_ONLINE        0x00000200  // -o --online
+# define ACTION_CACHED        0x00000400  // -c --cached
+# define ACTION_USE_SAVED     0x00000800  // <save_name>
 # define ACTION_BIT12         0x00001000
 # define ACTION_BIT13         0x00002000
 # define ACTION_BIT14         0x00004000
@@ -48,8 +48,9 @@ class CommandLineAction {
   std::string route;
   std::string stop;
   std::string save;
-  std::vector<std::string> saveUses;
+  std::vector<std::string *> saveUses;
   Action actions;
+  std::string to_string();
 };
 
 void usage();
