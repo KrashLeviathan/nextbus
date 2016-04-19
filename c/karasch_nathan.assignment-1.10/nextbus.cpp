@@ -10,7 +10,14 @@ int main(int argc, char *argv[]) {
   std::string xml_string;
   CommandLineAction *clAction;
   ConfigFile *configFile;
-  int i;
+  int i, j;
+
+  // TODO
+  // <body copyright="All data copyright agencies listed below and NextBus Inc 2016.">
+  //    <Error shouldRetry="false">
+  //    Agency parameter "a=cyrdie" is not valid.
+  //    </Error>
+  // </body>
 
   // Load settings from the config file
   filepath = get_filepath("config.nextbus");
@@ -87,8 +94,8 @@ int main(int argc, char *argv[]) {
 	<< std::endl;
     } else {
       // TODO: Find a smart way to cache schedule data
-      for (i = 0; i < configFile->routes.size(); i++) {
-	xml_string = schedule(configFile->agency.c_str(), configFile->routes[i]->c_str());
+      for (j = 0; j < configFile->routes.size(); j++) {
+	xml_string = schedule(configFile->agency.c_str(), configFile->routes[j]->c_str());
 	// TODO: parse
 
 
@@ -108,7 +115,7 @@ int main(int argc, char *argv[]) {
 	<< std::endl;
     } else {
       // TODO: Find a smart way to cache message data
-      for (i = 0; i < configFile->routes.size(); i++) {
+      for (j = 0; j < configFile->routes.size(); j++) {
 	xml_string = nb_messages(configFile->agency.c_str(), configFile->routes);
 	// TODO: parse
 
@@ -120,10 +127,9 @@ int main(int argc, char *argv[]) {
     // Predictions for a stop
     xml_string = predictions(configFile->agency.c_str(),
 			     clAction->stop.c_str());
-    // TODO: parse
-
-
-    
+    PredictionsParser parser (xml_string);
+    parser.parse();
+    std::cout << parser.results() << std::endl;
   } else if (clAction->actions & ACTION_PREDICT_ROUTE) {
     // Predictions for a route
     xml_string = predictions(configFile->agency.c_str(),
@@ -139,6 +145,21 @@ int main(int argc, char *argv[]) {
 				    clAction->route,
 				    clAction->stop));
     configFile->update();
+  } else if (clAction->actions & ACTION_USE_SAVED) {
+    // Use a custom setting
+    for (j = 0; j < configFile->savedRouteStops.size(); j++) {
+      for (i = 0; i < clAction->saveUses.size(); i++) {
+	if (!configFile->savedRouteStops[j]->name.compare(
+	       *clAction->saveUses[i])) {
+	  xml_string = predictions(configFile->agency.c_str(),
+			   configFile->savedRouteStops[j]->stop.c_str(),
+			   configFile->savedRouteStops[j]->route.c_str());
+	PredictionsParser parser (xml_string);
+	parser.parse();
+	std::cout << parser.results() << std::endl;
+	}
+      }
+    }
   } else {
     usage();
   }
