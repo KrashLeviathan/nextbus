@@ -7,6 +7,15 @@
 
 # define NB_SUBPATH     ".nextbus"
 
+# define IO_NORMAL       "\x1B[0m"
+# define IO_RED         "\x1B[31m"
+# define IO_GREEN       "\x1B[32m"
+# define IO_YELLOW      "\x1B[33m"
+# define IO_BLUE        "\x1B[34m"
+# define IO_MAGENTA     "\x1B[35m"
+# define IO_CYAN        "\x1B[36m"
+# define IO_WHITE       "\x1B[37m"
+
 # define ACTION_AGENCY_LIST   0x00000001  // -a --agencies
 # define ACTION_AGENCY_STORE  0x00000002  // -A --AgencyStore
 # define ACTION_ROUTE_LIST    0x00000004  // -r --routes
