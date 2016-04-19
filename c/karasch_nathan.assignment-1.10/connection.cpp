@@ -66,7 +66,7 @@ std::string schedule(const char *agency, const char *routeTag) {
   return client.Get(ss.str());
 }
 
-std::string messages(const char *agency, std::vector<std::string> routeTagVector) {
+std::string nb_messages(const char *agency, std::vector<std::string *> routeTagVector) {
   CURLplusplus client;
   std::stringstream ss;
   ss << "http://webservices.nextbus.com/service/publicXMLFeed"

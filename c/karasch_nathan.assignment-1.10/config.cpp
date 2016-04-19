@@ -65,7 +65,7 @@ bool ConfigFile::update() {
   
   file.open(filepath.c_str());
   if (file.is_open()) {
-    file << "NextBus Configuration File" << std::endl;
+    file << CONFIG_HEADER << std::endl;
     file << "version " << VERSION_NUMBER << std::endl << std::endl;
     
     file << ":LAST CHANGE" << std::endl;
@@ -105,7 +105,7 @@ bool ConfigFile::parse() {
   std::string line;
   SavedRouteStop *savedRS;
 
-  CHECK_HEADING("NextBus Configuration File");
+  CHECK_HEADING(CONFIG_HEADER);
   CHECK_HEADING("version " VERSION_NUMBER);
   getline(ss, line);
   CHECK_HEADING(":LAST CHANGE");
@@ -135,7 +135,7 @@ bool ConfigFile::parse() {
     while (getline(ss, line)) {
       if (line.compare("")) {
 	// If the line is not empty...
-	savedRS = new SavedRouteStop();
+	savedRS = new SavedRouteStop(NULL, NULL, NULL);
 	if (line[0] == '$') {
 	  savedRS->name = line.substr(1, std::string::npos);
 	} else {
@@ -160,5 +160,15 @@ bool ConfigFile::parse() {
     std::cout << "ERROR parse(): " << line << std::endl;
     return false;
   }
+  return true;
+}
+
+bool ConfigFile::lastChangeExpired() {
+  // TODO
+  return true;
+}
+
+bool ConfigFile::lastRouteDownloadExpired() {
+  // TODO
   return true;
 }

@@ -8,25 +8,34 @@
 
 # define VERSION_NUMBER        "1"
 # define DEFAULT_AGENCY        "cyride"
+# define CONFIG_HEADER         "NextBus Configuration File"
 # define SEC_PER_DAY           86400
+# define DAYS_TO_EXPIRE        1
 
 class SavedRouteStop {
  public:
   std::string name;
   std::string route;
   std::string stop;
+  SavedRouteStop(std::string n, std::string r, std::string s) {
+    name = n;
+    route = r;
+    stop = s;
+  }
 };
 
 class ConfigFile {
  public:
-  time_t lastChange;
-  time_t lastRouteDownload;
+  time_t lastChange; // TODO: refactor as lastUsage
+  time_t lastRouteDownload; // TODO: remove
   std::string agency;
   std::vector<std::string *> routes;
   std::vector<SavedRouteStop *> savedRouteStops;
 
   ConfigFile(std::string &filepath);
   bool update();
+  bool lastChangeExpired();
+  bool lastRouteDownloadExpired();
 
  private:
   std::string filepath;
