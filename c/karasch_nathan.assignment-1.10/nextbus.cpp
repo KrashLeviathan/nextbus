@@ -3,6 +3,7 @@
 #include "config.h"
 #include "connection.h"
 #include "route_parser.h"
+#include "predictions_parser.h"
 
 int main(int argc, char *argv[]) {
   std::string filepath;
@@ -18,6 +19,21 @@ int main(int argc, char *argv[]) {
   // Parse command line arguments
   clAction = parse_arguments(argc, argv);
 
+
+
+
+
+
+  // FIXME
+  // filepath = get_filepath("predictions.xml");
+  // xml_string = get_file_contents(filepath);
+  xml_string = predictions("cyride", "1077", "2W");
+  PredictionsParser parser (xml_string);
+  parser.parse();
+  std::cout << parser.results() << std::endl;
+  
+  goto afterblock;
+  
   // Take appropriate action
   if (clAction->actions & ACTION_AGENCY_LIST) {
     // Agency list
@@ -131,11 +147,13 @@ int main(int argc, char *argv[]) {
     error("Unknown CommandLineAction");
   }
 
+ afterblock:
+
   // After parsing an xml string, the variables in the
   // RouteParser instance contain all the data pulled
   // from the xml string.
-  RouteParser parser (xml_string);
-  parser.parse();
+  // RouteParser parser (xml_string);
+  // parser.parse();
 
   // Cleanup
   delete clAction;
