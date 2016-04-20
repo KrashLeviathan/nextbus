@@ -8,6 +8,7 @@
 # include "connection.h"
 # include "predictions_parser.h"
 # include "agency_parser.h"
+# include "route_list_parser.h"
 # include "help_info.h"
 
 void action_agency_list(CommandLineAction *clAction, ConfigFile *configFile) {
@@ -51,10 +52,9 @@ void action_route_list(CommandLineAction *clAction, ConfigFile *configFile) {
     xml_string = routeList(configFile->agency.c_str());
     set_file_contents(filepath, xml_string);
   }
-  // TODO: Parse
-
-
-  
+  RouteListParser parser (xml_string);
+  parser.parse();
+  std::cout << parser.results() << std::endl;
   // TODO: Route Config?
   // xml_string = routeConfig(configFile->agency.c_str(), NULL);
 }

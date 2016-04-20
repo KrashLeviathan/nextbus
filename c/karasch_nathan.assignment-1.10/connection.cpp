@@ -18,6 +18,7 @@ std::string routeList(const char *agency) {
   return client.Get(ss.str());
 }
 
+// TODO: This is implemented (and parsed), but not used yet.
 std::string routeConfig(const char *agency, const char *optionalRouteTag) {
   CURLplusplus client;
   std::stringstream ss;

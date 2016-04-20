@@ -8,7 +8,7 @@ CXXFLAGS = -Wall -Wno-sign-compare -ggdb -funroll-loops
 LDFLAGS = -lcurl
 
 BIN = nextbus
-OBJS = nextbus.o config.o io.o connection.o curlplusplus.o route.o route_parser.o predictions_parser.o xml_parser.o actions.o agency_parser.o
+OBJS = nextbus.o config.o io.o connection.o curlplusplus.o route.o route_parser.o predictions_parser.o xml_parser.o actions.o agency_parser.o route_list_parser.o
 
 all: $(BIN) etags
 
