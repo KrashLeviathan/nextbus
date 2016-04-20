@@ -1,10 +1,13 @@
 # include <iostream>
 # include <string>
+# include <sstream>
+# include <stdlib.h>
 # include "actions.h"
 # include "io.h"
 # include "config.h"
 # include "connection.h"
 # include "predictions_parser.h"
+# include "help_info.h"
 
 void action_agency_list(CommandLineAction *clAction, ConfigFile *configFile) {
   std::string filepath;
@@ -123,5 +126,18 @@ void action_use_saved(CommandLineAction *clAction, ConfigFile *configFile) {
 }
 
 void action_help() {
-  std::cout << "Help message!" << std::endl;
+  std::stringstream ss;
+  std::string filepath;
+  std::string readme_string;
+
+  // Save the help info to README.txt in the default directory
+  filepath = get_filepath("README.txt");
+  set_file_contents(filepath, help_info);
+
+  // Call less to try to display it
+  ss << "less " << filepath;
+  if (system(ss.str().c_str())) {
+    // Call to less failed, so dump it to the terminal.
+    std::cout << help_info << std::endl;
+  }
 }

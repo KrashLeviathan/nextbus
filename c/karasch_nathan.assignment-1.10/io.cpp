@@ -14,11 +14,17 @@ struct stat sb;
 void usage() {
   std::cout
     << "Usage: nextbus [" << std::endl
+    << "                 [ <save-name-1> <save-name-2> ...           ]"
+    << std::endl
     << "                 [ -a | --agencies                           ]"
     << std::endl
     << "                 [ -A | --AgencyStore  <agency>              ]"
     << std::endl
+    << "                 [ -c | --cached                             ]"
+    << std::endl
     << "                 [ -h | --help                               ]"
+    << std::endl
+    << "                 [ -o | --online                             ]"
     << std::endl
     << "                 [ -p | --predictstop  <stop>                ]"
     << std::endl
