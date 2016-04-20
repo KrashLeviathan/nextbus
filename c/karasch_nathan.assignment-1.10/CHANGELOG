@@ -3,3 +3,55 @@ CHANGELOG
 	Day 1: Wed Apr 13 2016
 
     Began assignment 1.10. Planned out what it was going to do.
+
+	Day 2: Thu Apr 14 2016
+
+    Began work on the XML parser for routeConfig data
+    Split methods into different files. Finished laying the
+	ground work for nextbus configuration and xml file parsing.
+
+	Day 3: Fri Apr 15 2016
+
+    The route parser is near completion.
+    The XML route parser is complete! Wooooo!
+    Got it curling files using curl/curl.h and linking with -lcurl
+    Implemented command line input parser
+
+	Day 4: Mon Apr 18 2016
+
+    Config file parser is working.
+    Updated error message for new or corrupted config file.
+    Created symlinks for parsers to the root directory. Updated
+	connection.cpp so the methods use the passed-in parameters.
+    Implemented set_file_contents() which allows you to save an
+	xml string (or any string) to a file
+
+	Day 5: Tue Apr 19 2016
+
+    Set up the if-else statements in main to do different actions
+	depending on the command line inputs. Currently the clAction
+	is resetting to 0 after being assigned from parse_arguments()...
+    Implemented predictions parsing and display. Almost there!
+    Fixed CommandLineAction to handle saveUses input and --online
+	and --cached. --Predictions finally works! Errors when
+	config.nextbus is corrupted.
+    Fixed config.nextbus parsing errors related to saving route/stops.
+    Usage of saved routes is working correctly.
+    Moved actions out of main and into their own file. Removed
+	messages action.
+    Removed --messages, added --help, changed if-else in main method
+	to if-if-if... statements.
+    Removed ACTION_ROUTE_STORE and everything it entailed.
+    Added some more color to output.
+    Refactored lastChange as lastUsage for clarity.
+    Command line action --help displays README using less.
+    Abstracted several XmlParser methods, removing lots of duplicated
+	code in the concrete classes.
+    Removed symlinks and moved all files to one directory.
+
+	Day 6: Wed Apr 20 2016
+
+    Implemented --agencies by created AgencyParser class
+    Added stopTag and more colors to predictions.
+    Implemented route list using RouteListParser class
+    Implemented error catching for NextBus API Errors.
