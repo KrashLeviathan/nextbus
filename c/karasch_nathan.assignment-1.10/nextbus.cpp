@@ -36,10 +36,6 @@ int main(int argc, char *argv[]) {
     // Route list
     action_route_list(clAction, configFile);
   }
-  if (clAction->actions & ACTION_ROUTE_STORE) {
-    // Store route
-    action_route_store(clAction, configFile);
-  }
   if (clAction->actions & ACTION_SCHEDULE_LIST) {
     // Schedules
     action_schedule_list(clAction, configFile);

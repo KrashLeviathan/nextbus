@@ -14,23 +14,21 @@ struct stat sb;
 void usage() {
   std::cout
     << "Usage: nextbus [" << std::endl
-    << "                 [ -a | --agencies     ]                |"
+    << "                 [ -a | --agencies                           ]"
     << std::endl
-    << "                 [ -A | --AgencyStore  ] <agency>       |"
+    << "                 [ -A | --AgencyStore  <agency>              ]"
     << std::endl
-    << "                 [ -h | --help         ]                |"
+    << "                 [ -h | --help                               ]"
     << std::endl
-    << "                 [ -p | --predictstop  ] <stop>         |"
+    << "                 [ -p | --predictstop  <stop>                ]"
     << std::endl
-    << "                 [ -P | --PredictRoute ] <route> <stop> |"
+    << "                 [ -P | --PredictRoute <route> <stop>        ]"
     << std::endl
-    << "                 [ -r | --routes       ]                |"
+    << "                 [ -r | --routes                             ]"
     << std::endl
-    << "                 [ -R | --RouteStore   ] <route>        |"
+    << "                 [ -S | --Save         <name> <route> <stop> ]"
     << std::endl
-    << "                 [ -S | --Save         ] <name> <route> <stop>"
-    << std::endl
-    << "                 [ -s | --schedule     ] <route>        |"
+    << "                 [ -s | --schedule     <route>               ]"
     << std::endl
     << "               ]" << std::endl;
   exit(1);
@@ -126,20 +124,6 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
           if ((argc > i + 1) && argv[i + 1][0] != '-') {
             // Argument: agency
 	    cla->agency = argv[++i];
-          } else {
-	    usage();
-	  }
-          break;
-        case 'R':
-	  // Store a route in the configuration for quick access
-          if ((!long_arg && argv[i][2]) ||
-              (long_arg && strcmp(argv[i], "-RouteStore"))) {
-            usage();
-          }
-	  cla->actions = cla->actions | ACTION_ROUTE_STORE;
-          if ((argc > i + 1) && argv[i + 1][0] != '-') {
-            // Argument: route
-	    cla->route = argv[++i];
           } else {
 	    usage();
 	  }

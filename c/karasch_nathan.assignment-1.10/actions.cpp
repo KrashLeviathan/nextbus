@@ -54,42 +54,13 @@ void action_route_list(CommandLineAction *clAction, ConfigFile *configFile) {
   // xml_string = routeConfig(configFile->agency.c_str(), NULL);
 }
 
-void action_route_store(CommandLineAction *clAction, ConfigFile *configFile) {
-  configFile->routes.push_back(&clAction->route);
-  configFile->update();
-  std::cout << "Configuration Change:" << std::endl
-	    << "   Added route '"
-	    << clAction->route << "'. This route's schedule or "
-	    << std::endl
-	    << "   messages will display with the command line arguments "
-	    << std::endl
-	    << "   [-s|--schedules] or [-m|--messages], respectively."
-	    << std::endl;
-}
-
 void action_schedule_list(CommandLineAction *clAction, ConfigFile *configFile) {
   std::string xml_string;
-  int i;
   
-  if (configFile->routes.size() == 0) {
-    // TODO
-    std::cout
-      << "   No route given! Use nextbus -R <route name> to store a route"
-      << std::endl
-      << "   or several routes first; or use nextbus -s <route name> to"
-      << std::endl
-      << "   give a schedule for a certain route without storing it."
-      << std::endl;
-  } else {
-    // TODO: Find a smart way to cache schedule data
-    for (i = 0; i < configFile->routes.size(); i++) {
-      xml_string = schedule(configFile->agency.c_str(), configFile->routes[i]->c_str());
-      // TODO: parse
-      
-      
-      
-    }
-  }
+  xml_string = schedule(configFile->agency.c_str(), clAction->route.c_str());
+
+  // TODO: Find a smart way to cache schedule data
+  // TODO: parse
 }
 
 void action_predict_stop(CommandLineAction *clAction, ConfigFile *configFile) {

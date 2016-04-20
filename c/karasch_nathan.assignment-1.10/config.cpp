@@ -19,10 +19,6 @@ void ConfigFile::print_details() {
   std::cout << lastRouteDownload << std::endl;
   std::cout << "Agency" << std::endl;
   std::cout << agency << std::endl;
-  std::cout << "Routes" << std::endl;
-  for (i = 0; i < routes.size(); i++) {
-    std::cout << *routes[i] << std::endl;
-  }
   std::cout << "Saved" << std::endl;
   for (i = 0; i < savedRouteStops.size(); i++) {
     std::cout << savedRouteStops[i]->name << std::endl;
@@ -43,20 +39,19 @@ ConfigFile::ConfigFile(std::string &file_path) {
       << std::endl
       << "   Otherwise, it's possible your config.nextbus file was invalid"
       << std::endl
-      << "   or corrupted. Use the command line arguments to add new routes,"
+      << "   or corrupted. Use the command line arguments to change agency"
       << std::endl
-      << "   stops, etc safely. If you want to edit the config file manually,"
+      << "   or save routes/stops safely. If you want to edit the config"
       << std::endl
-      << "   do so with caution!"
+      << "   file manually, do so with caution!"
       << std::endl << std::endl
-      << "Creating a new config file at "
-      << filepath << std::endl << std::endl;
+      << IO_GREEN "Creating a new config file at "
+      << filepath << IO_NORMAL << std::endl << std::endl;
     lastChange = 0;
     lastRouteDownload = 0;
     agency = DEFAULT_AGENCY;
     update();
   }
-  // print_details();
 }
 
 bool ConfigFile::update() {
@@ -76,14 +71,6 @@ bool ConfigFile::update() {
     
     file << ":AGENCY" << std::endl;
     file << agency << std::endl << std::endl;
-
-    file << ":ROUTES" << std::endl;
-    if (!routes.empty()) {
-      for (i = 0; i < routes.size(); i++) {
-	file << *routes[i] << std::endl;
-      }
-    }
-    file << std::endl;
 
     file << ":SAVED" << std::endl;
     if (!savedRouteStops.empty()) {
@@ -124,41 +111,30 @@ bool ConfigFile::parse() {
   getline(ss, line);
   agency = line;
   getline(ss, line);
-  CHECK_HEADING(":ROUTES");
-  while (getline(ss, line) && line.compare(":SAVED")) {
+  CHECK_HEADING(":SAVED");
+  while (getline(ss, line)) {
     if (line.compare("")) {
-      // If the line is not empty, save the route
-      routes.push_back(new std::string(line));
-    }
-  }
-  if (!line.compare(":SAVED")) {
-    while (getline(ss, line)) {
-      if (line.compare("")) {
-	// If the line is not empty...
-	savedRS = new SavedRouteStop();
-	if (line[0] == '$') {
-	  savedRS->name = line.substr(1, std::string::npos);
-	} else {
-	  return false;
-	}
-	getline(ss, line);
-	if (!line.substr(0, 6).compare("route=")) {
-	  savedRS->route = line.substr(6, std::string::npos);
-	} else {
-	  return false;
-	}
-	getline(ss, line);
-	if (!line.substr(0, 5).compare("stop=")) {
-	  savedRS->stop = line.substr(5, std::string::npos);
-	} else {
-	  return false;
-	}
-	savedRouteStops.push_back(savedRS);
+      // If the line is not empty...
+      savedRS = new SavedRouteStop();
+      if (line[0] == '$') {
+	savedRS->name = line.substr(1, std::string::npos);
+      } else {
+	return false;
       }
+      getline(ss, line);
+      if (!line.substr(0, 6).compare("route=")) {
+	savedRS->route = line.substr(6, std::string::npos);
+      } else {
+	return false;
+      }
+      getline(ss, line);
+      if (!line.substr(0, 5).compare("stop=")) {
+	savedRS->stop = line.substr(5, std::string::npos);
+      } else {
+	return false;
+      }
+      savedRouteStops.push_back(savedRS);
     }
-  } else {
-    std::cout << "ERROR parse(): " << line << std::endl;
-    return false;
   }
   return true;
 }

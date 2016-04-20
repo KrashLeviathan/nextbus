@@ -47,14 +47,14 @@ std::string predictions(const char *agency, const char *stopTag,
   return client.Get(ss.str());
 }
 
+// TODO: Maybe this can get implemented someday, but not now
 std::string predictionsForMultiStops(const char *agency,
-				     std::vector<std::string> stopTagVector) {
+			     std::vector<std::string> stopTagVector) {
   CURLplusplus client;
   std::stringstream ss;
   ss << "http://webservices.nextbus.com/service/publicXMLFeed"
      << "?command=predictionsForMultiStops&a=" << agency
      << "&stops=<stop 1>&stops=<stop 2>&stops=<stop3>";
-  // TODO
   return client.Get(ss.str());
 }
 
@@ -66,12 +66,12 @@ std::string schedule(const char *agency, const char *routeTag) {
   return client.Get(ss.str());
 }
 
+// TODO: Maybe this can get implemented someday, but not now
 std::string nb_messages(const char *agency, std::vector<std::string *> routeTagVector) {
   CURLplusplus client;
   std::stringstream ss;
   ss << "http://webservices.nextbus.com/service/publicXMLFeed"
      << "?command=messages&a=" << agency
      << "&r=<route tag1>&r=<route tagN>";
-  // TODO
   return client.Get(ss.str());
 }

@@ -27,10 +27,9 @@ class SavedRouteStop {
 
 class ConfigFile {
  public:
-  time_t lastChange; // TODO: refactor as lastUsage
-  time_t lastRouteDownload; // TODO: remove
+  time_t lastChange; // TODO: refactor as lastUsage and implement
+  time_t lastRouteDownload; // TODO: implement
   std::string agency;
-  std::vector<std::string *> routes;
   std::vector<SavedRouteStop *> savedRouteStops;
 
   ConfigFile(std::string &filepath);
