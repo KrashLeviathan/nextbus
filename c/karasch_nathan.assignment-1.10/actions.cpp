@@ -7,6 +7,7 @@
 # include "config.h"
 # include "connection.h"
 # include "predictions_parser.h"
+# include "agency_parser.h"
 # include "help_info.h"
 
 void action_agency_list(CommandLineAction *clAction, ConfigFile *configFile) {
@@ -23,8 +24,9 @@ void action_agency_list(CommandLineAction *clAction, ConfigFile *configFile) {
     xml_string = agencyList();
     set_file_contents(filepath, xml_string);
   }
-  // TODO: parse agencyList
-
+  AgencyParser parser (xml_string);
+  parser.parse();
+  std::cout << parser.results() << std::endl;
 }
 
 void action_agency_store(CommandLineAction *clAction, ConfigFile *configFile) {
