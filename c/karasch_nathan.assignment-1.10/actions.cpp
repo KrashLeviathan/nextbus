@@ -70,9 +70,12 @@ void action_schedule_list(CommandLineAction *clAction, ConfigFile *configFile) {
 
 void action_predict_stop(CommandLineAction *clAction, ConfigFile *configFile) {
   std::string xml_string;
-  
+  std::string filepath;
+
+  filepath = get_filepath("lastPrediction.xml");
   xml_string = predictions(configFile->agency.c_str(),
 			   clAction->stop.c_str());
+  set_file_contents(filepath, xml_string);
   PredictionsParser parser (xml_string);
   parser.parse();
   std::cout << parser.results() << std::endl;
@@ -80,10 +83,13 @@ void action_predict_stop(CommandLineAction *clAction, ConfigFile *configFile) {
 
 void action_predict_route(CommandLineAction *clAction, ConfigFile *configFile) {
   std::string xml_string;
-  
+  std::string filepath;
+
+  filepath = get_filepath("lastPrediction.xml");
   xml_string = predictions(configFile->agency.c_str(),
 			   clAction->stop.c_str(),
 			   clAction->route.c_str());
+  set_file_contents(filepath, xml_string);
   PredictionsParser parser (xml_string);
   parser.parse();
   std::cout << parser.results() << std::endl;

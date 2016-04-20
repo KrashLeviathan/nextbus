@@ -12,6 +12,8 @@ char PredictionsParser::key_from_string(std::string *str) {
     return ATTR_ROUTE_TAG;
   } else if (!str->compare("routeTitle")) {
     return ATTR_ROUTE_TITLE;
+  } else if (!str->compare("stopTag")) {
+    return ATTR_STOP_TAG;
   } else if (!str->compare("stopTitle")) {
     return ATTR_STOP_TITLE;
   } else if (!str->compare("text")) {
@@ -46,9 +48,12 @@ std::string PredictionsParser::results() {
     // Successful predictions results
     for (i = 0; i < predictions.size(); i++) {
       ss << "NEXTBUS PREDICTIONS:" << std::endl << std::endl
-	 << "   Route:   " IO_YELLOW << predictions[i]->routeTitle
-	 << " (" << predictions[i]->routeTag << ")" IO_NORMAL << std::endl
-	 << "   Stop:    " << predictions[i]->stopTitle << std::endl;
+	 << "   Route:   " << predictions[i]->routeTitle
+	 << " (" IO_YELLOW << predictions[i]->routeTag
+	 << IO_NORMAL ")" << std::endl
+	 << "   Stop:    " << predictions[i]->stopTitle
+	 << " (" IO_YELLOW << predictions[i]->stopTag
+	 << IO_NORMAL ")" << std::endl;
       for (j = 0; j < predictions[i]->predictions.size(); j++) {
 	if (direction.compare(predictions[i]
 			      ->predictions[j]->directionTitle)) {
@@ -70,9 +75,12 @@ std::string PredictionsParser::results() {
     ss << IO_RED "There are no predictions at this time for:" IO_NORMAL
        << std::endl << "   Route:      "
        << predictions[0]->routeTitle
-       << " (" << predictions[0]->routeTag << ")" << std::endl
+       << " (" IO_YELLOW << predictions[0]->routeTag
+       << IO_NORMAL ")" << std::endl
        << "   Stop:       "
-       << predictions[0]->stopTitle << std::endl
+       << predictions[0]->stopTitle
+       << " (" IO_YELLOW << predictions[0]->stopTag
+       << IO_NORMAL ")" << std::endl
        << "   Direction:  "
        << predictions[0]->dirTitleBecauseNoPredictions;
   }
@@ -127,6 +135,7 @@ void PredictionsParser::parse_predictions() {
   attributeMap = parse_attributes();
   tempPredictions->routeTag = (*attributeMap)[ATTR_ROUTE_TAG];
   tempPredictions->routeTitle = (*attributeMap)[ATTR_ROUTE_TITLE];
+  tempPredictions->stopTag = (*attributeMap)[ATTR_STOP_TAG];
   tempPredictions->stopTitle = (*attributeMap)[ATTR_STOP_TITLE];
   tempPredictions->dirTitleBecauseNoPredictions = (*attributeMap)[ATTR_DIR_NO_PREDICTS];
 }

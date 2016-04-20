@@ -9,14 +9,15 @@
 
 # define ATTR_ROUTE_TAG        'a'
 # define ATTR_ROUTE_TITLE      'b'
-# define ATTR_STOP_TITLE       'c'
-# define ATTR_MESSAGE          'd'
-# define ATTR_DIRECTION_TAG    'e'
-# define ATTR_DIRECTION_TITLE  'f'
-# define ATTR_MINUTES          'g'
-# define ATTR_EPOCH_TIME       'h'
-# define ATTR_IS_DEPARTURE     'i'
-# define ATTR_DIR_NO_PREDICTS  'j'
+# define ATTR_STOP_TAG         'c'
+# define ATTR_STOP_TITLE       'd'
+# define ATTR_MESSAGE          'e'
+# define ATTR_DIRECTION_TAG    'f'
+# define ATTR_DIRECTION_TITLE  'g'
+# define ATTR_MINUTES          'h'
+# define ATTR_EPOCH_TIME       'i'
+# define ATTR_IS_DEPARTURE     'j'
+# define ATTR_DIR_NO_PREDICTS  'k'
 
 class Prediction {
  public:
@@ -35,6 +36,7 @@ class Predictions {
  public:
   std::string routeTag;
   std::string routeTitle;
+  std::string stopTag;
   std::string stopTitle;
   std::vector<Prediction *> predictions;
   std::string messageText;

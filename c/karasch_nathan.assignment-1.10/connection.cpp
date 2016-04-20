@@ -42,8 +42,8 @@ std::string predictions(const char *agency, const char *stopTag,
   CURLplusplus client;
   std::stringstream ss;
   ss << "http://webservices.nextbus.com/service/publicXMLFeed"
-     << "?command=predictions&a=" << agency << "&stopId=" << stopTag
-     << "&routeTag=" << routeTag;
+     << "?command=predictions&a=" << agency << "&s=" << stopTag
+     << "&r=" << routeTag;
   return client.Get(ss.str());
 }
 
