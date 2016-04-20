@@ -22,5 +22,6 @@ void action_save_custom(CommandLineAction *clAction,
 			ConfigFile *configFile);
 void action_use_saved(CommandLineAction *clAction,
 		      ConfigFile *configFile);
+void action_help();
 
 #endif

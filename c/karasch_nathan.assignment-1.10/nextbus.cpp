@@ -27,31 +27,44 @@ int main(int argc, char *argv[]) {
   if (clAction->actions & ACTION_AGENCY_LIST) {
     // Agency list
     action_agency_list(clAction, configFile);
-  } else if (clAction->actions & ACTION_AGENCY_STORE) {
+  }
+  if (clAction->actions & ACTION_AGENCY_STORE) {
     // Store agency
     action_agency_store(clAction, configFile);
-  } else if (clAction->actions & ACTION_ROUTE_LIST) {
+  }
+  if (clAction->actions & ACTION_ROUTE_LIST) {
     // Route list
     action_route_list(clAction, configFile);
-  } else if (clAction->actions & ACTION_ROUTE_STORE) {
+  }
+  if (clAction->actions & ACTION_ROUTE_STORE) {
     // Store route
     action_route_store(clAction, configFile);
-  } else if (clAction->actions & ACTION_SCHEDULE_LIST) {
+  }
+  if (clAction->actions & ACTION_SCHEDULE_LIST) {
     // Schedules
     action_schedule_list(clAction, configFile);
-  } else if (clAction->actions & ACTION_PREDICT_STOP) {
+  }
+  if (clAction->actions & ACTION_HELP) {
+    // Help
+    action_help();
+  }
+  if (clAction->actions & ACTION_PREDICT_STOP) {
     // Predictions for a stop
     action_predict_stop(clAction, configFile);
-  } else if (clAction->actions & ACTION_PREDICT_ROUTE) {
+  }
+  if (clAction->actions & ACTION_PREDICT_ROUTE) {
     // Predictions for a route
     action_predict_route(clAction, configFile);
-  } else if (clAction->actions & ACTION_SAVE_CUSTOM) {
+  }
+  if (clAction->actions & ACTION_SAVE_CUSTOM) {
     // Save a custom setting
     action_save_custom(clAction, configFile);
-  } else if (clAction->actions & ACTION_USE_SAVED) {
+  }
+  if (clAction->actions & ACTION_USE_SAVED) {
     // Use a custom setting
     action_use_saved(clAction, configFile);
-  } else {
+  }
+  if (clAction->actions == 0) {
     usage();
   }
 

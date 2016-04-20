@@ -18,19 +18,19 @@ void usage() {
     << std::endl
     << "                 [ -A | --AgencyStore  ] <agency>       |"
     << std::endl
-    << "                 [ -r | --routes       ]                |"
-    << std::endl
-    << "                 [ -R | --RouteStore   ] <route>        |"
-    << std::endl
-    << "                 [ -s | --schedules    ]                |"
-    << std::endl
-    << "                 [ -m | --messages     ]                |"
+    << "                 [ -h | --help         ]                |"
     << std::endl
     << "                 [ -p | --predictstop  ] <stop>         |"
     << std::endl
     << "                 [ -P | --PredictRoute ] <route> <stop> |"
     << std::endl
+    << "                 [ -r | --routes       ]                |"
+    << std::endl
+    << "                 [ -R | --RouteStore   ] <route>        |"
+    << std::endl
     << "                 [ -S | --Save         ] <name> <route> <stop>"
+    << std::endl
+    << "                 [ -s | --schedule     ] <route>        |"
     << std::endl
     << "               ]" << std::endl;
   exit(1);
@@ -195,20 +195,18 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
 	  cla->actions = cla->actions | ACTION_ROUTE_LIST;
           break;
         case 's':
-	  // List bus schedules
+	  // List bus schedule
           if ((!long_arg && argv[i][2]) ||
-              (long_arg && strcmp(argv[i], "-schedules"))) {
+              (long_arg && strcmp(argv[i], "-schedule"))) {
             usage();
           }
 	  cla->actions = cla->actions | ACTION_SCHEDULE_LIST;
-          break;
-        case 'm':
-	  // List bus messages
-          if ((!long_arg && argv[i][2]) ||
-              (long_arg && strcmp(argv[i], "-messages"))) {
-            usage();
-          }
-	  cla->actions = cla->actions | ACTION_MESSAGE_LIST;
+          if ((argc > i + 1) && argv[i + 1][0] != '-') {
+            // Argument: route
+	    cla->route = argv[++i];
+          } else {
+	    usage();
+	  }
           break;
 	case 'S':
 	  // Save a custom variable with route & stop info
@@ -252,6 +250,10 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
           }
 	  cla->actions = cla->actions | ACTION_CACHED;
           goto param_not_complete;
+	case 'h':
+	  // Show help information
+	  cla->actions = cla->actions | ACTION_HELP;
+	  break;
         default:
           usage();
         }

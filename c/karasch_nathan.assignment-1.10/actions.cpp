@@ -151,3 +151,6 @@ void action_use_saved(CommandLineAction *clAction, ConfigFile *configFile) {
   }
 }
 
+void action_help() {
+  std::cout << "Help message!" << std::endl;
+}

@@ -20,8 +20,8 @@
 # define ACTION_AGENCY_STORE  0x00000002  // -A --AgencyStore
 # define ACTION_ROUTE_LIST    0x00000004  // -r --routes
 # define ACTION_ROUTE_STORE   0x00000008  // -R --RouteStore
-# define ACTION_SCHEDULE_LIST 0x00000010  // -s --schedules
-# define ACTION_MESSAGE_LIST  0x00000020  // -m --messages
+# define ACTION_SCHEDULE_LIST 0x00000010  // -s --schedule
+# define ACTION_HELP          0x00000020  // -h --help
 # define ACTION_PREDICT_STOP  0x00000040  // -p --predictstop
 # define ACTION_PREDICT_ROUTE 0x00000080  // -P --PredictRoute
 # define ACTION_SAVE_CUSTOM   0x00000100  // -S --Save
