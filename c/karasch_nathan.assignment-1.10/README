@@ -26,15 +26,15 @@ Files:
   - io.h
   - Makefile
   - nextbus.cpp
-  - predictions_parser.cpp  (symlink to file in utils/nb_parser/)
-  - predictions_parser.h    (symlink to file in utils/nb_parser/)
+  - predictions_parser.cpp
+  - predictions_parser.h
   - README
-  - route.cpp               (symlink to file in utils/nb_parser/)
-  - route.h                 (symlink to file in utils/nb_parser/)
-  - route_parser.cpp        (symlink to file in utils/nb_parser/)
-  - route_parser.h          (symlink to file in utils/nb_parser/)
-  - xml_parser.cpp          (symlink to file in utils/nb_parser/)
-  - xml_parser.h            (symlink to file in utils/nb_parser/)
+  - route.cpp
+  - route.h
+  - route_parser.cpp
+  - route_parser.h
+  - xml_parser.cpp
+  - xml_parser.h
 
 Compiling:
   - $ make
