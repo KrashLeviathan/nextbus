@@ -27,7 +27,7 @@ void action_agency_list(CommandLineAction *clAction, ConfigFile *configFile) {
 void action_agency_store(CommandLineAction *clAction, ConfigFile *configFile) {
   configFile->agency = clAction->agency;
   configFile->update();
-  std::cout << "Configuration Change:" << std::endl
+  std::cout << IO_GREEN "Configuration Change:" IO_NORMAL << std::endl
 	    << "   Agency set to '"
 	    << configFile->agency << "'." << std::endl;
 }

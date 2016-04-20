@@ -46,8 +46,8 @@ std::string PredictionsParser::results() {
     // Successful predictions results
     for (i = 0; i < predictions.size(); i++) {
       ss << "NEXTBUS PREDICTIONS:" << std::endl << std::endl
-	 << "   Route:   " << predictions[i]->routeTitle
-	 << " (" << predictions[i]->routeTag << ")" << std::endl
+	 << "   Route:   " IO_YELLOW << predictions[i]->routeTitle
+	 << " (" << predictions[i]->routeTag << ")" IO_NORMAL << std::endl
 	 << "   Stop:    " << predictions[i]->stopTitle << std::endl;
       for (j = 0; j < predictions[i]->predictions.size(); j++) {
 	if (direction.compare(predictions[i]
@@ -67,8 +67,8 @@ std::string PredictionsParser::results() {
     }
   } else {
     // No predictions
-    ss << "There are no predictions at this time for:" << std::endl
-       << "   Route:      "
+    ss << IO_RED "There are no predictions at this time for:" IO_NORMAL
+       << std::endl << "   Route:      "
        << predictions[0]->routeTitle
        << " (" << predictions[0]->routeTag << ")" << std::endl
        << "   Stop:       "
@@ -171,7 +171,8 @@ std::map<char, std::string> *PredictionsParser::parse_attributes() {
       break;
     }
   }
-  std::cout << "ERROR: PredictionsParser::parse_attributes()" << std::endl;
+  std::cout << IO_RED "ERROR: PredictionsParser::parse_attributes()"
+	    << IO_NORMAL << std::endl;
   return attributeMap;
 }
 
