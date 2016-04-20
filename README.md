@@ -87,23 +87,23 @@ nextbus [
 
 ## Flags/Parameters:
 
-### <save-name-1> <save-name-2> ...
+### `<save-name-1> <save-name-2> ...`
 
 Type any of your saved route/stop variables to get
 predictions for that route/stop.
 
 Example: `nextbus work1 work2`
 
-### -a | --agencies
+### `-a | --agencies`
 
 Lists all the agencies serviced by NextBus.
 
-### -A | --AgencyStore  <agency>
+### `-A | --AgencyStore  <agency>`
 
 Stores the given agency as your default agency for
 getting schedules and predictions.
 
-### -c | --cached
+### `-c | --cached`
 
 Forces the program to used cached schedule and route
 information. Doesn't work with predictions, since they
@@ -111,43 +111,43 @@ always need to be up-to-date information. This can be
 useful for getting schedule/route information when
 offline.
 
-### -h | --help
+### `-h | --help`
 
 Displays information from the README about how to use
 the program.
 
-### -o | --online
+### `-o | --online`
 
 Forces the program to pull data from online rather
 than using cached information. Otherwise the program
 will use cached information for schedules and route info
 if the information isn't too old.
 
-### -p | --predictstop  <stop>
+### `-p | --predictstop  <stop>`
 
 Shows predictions for all arriving/departing routes
 at a given stop number.
 
 Example: `nextbus -p 1166`
 
-### -P | --PredictRoute <route> <stop>
+### `-P | --PredictRoute  <route>  <stop>`
 
 Shows predictions for the given route at the given stop.
 
 Example: `nextbus -P 2E 1123`
 
-### -r | --routes
+### `-r | --routes`
 
 Lists all routes for the current agency.
 
-### -S | --Save         <name> <route> <stop>
+### `-S | --Save  <name>  <route>  <stop>`
 
 Saves the given route and stop to a variable name that
 can be used with `nextbus <save-name-1> <save-name-2> ...`
 
 Example: `nextbus -S home 1W 1166`
 
-### -s | --schedule     <route>
+### `-s | --schedule  <route>`
 
 Displays the bus schedule for the given route.
 
