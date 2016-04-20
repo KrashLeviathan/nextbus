@@ -4,7 +4,7 @@
 #include "route_parser.h"
 #include "route.h"
 
-static char key_from_string(std::string *str) {
+char RouteParser::key_from_string(std::string *str) {
   if (!str->compare("tag")) {
     return ATTR_TAG;
   } else if (!str->compare("title")) {
@@ -59,108 +59,27 @@ void RouteParser::parse_route() {
   tempRoute->oppositeColor = (*attributeMap)[ATTR_OPP_COLOR];
 }
 
-std::map<char, std::string> *RouteParser::parse_attributes() {
-  std::map<char, std::string> *attributeMap = new map<char, std::string>();
-  char key;
-  bool readingValueString = false;
-  
-  substring.erase();
-
-  while (index < text->length()) {
-    c = (*text)[index++];
-    switch (c) {
-    case ' ':
-      if (!readingValueString) {
-	// New attribute coming up
-	substring.erase();
-      } else {
-	// The space is part of a string value
-	substring += c;
-      }
-      break;
-    case '=':
-      key = key_from_string(&substring);
-      break;
-    case '"':
-      if (readingValueString) {
-	(*attributeMap)[key] = substring;
-	readingValueString = false;
-      } else {
-	readingValueString = true;
-	substring.erase();
-      }
-      break;
-    case '>':
-      // Closing bracket found
-      substring.erase();
-      return attributeMap;
-    default:
-      substring += c;
-      break;
-    }
-  }
-  std::cout << "ERROR: RouteParser::parse_attributes()" << std::endl;
-  return attributeMap;
-}
-
-void RouteParser::parse_element_open() {
-  substring.erase();
-  c = (*text)[index++];
-  if (c == '/') {
-    // Element closing
-    substring.erase();
-    while (index < text->length()) {
-      c = (*text)[index++];
-      // Is it an element we care about?
-      if (c == ' ' || c == '>') {
-	if (!substring.compare("route")) {
-	  // Route complete
-	  routes.push_back(tempRoute);
-	} else if (!substring.compare("stop")) {
-	  // Stop complete
-	  std::cout << "ERROR: RouteParser::parse_element_open()"
-		    << std::endl;
-	} else if (!substring.compare("direction")) {
-	  // Direction complete
-	  tempRoute->directions.push_back(*tempDirection);
-	  tempDirection = NULL;
-	}
-	substring.erase();
-	break;
-      } else {
-	substring += c;
-      }
-    }
-  } else {
-    // Element opening
-    substring.erase();
-    substring += c;
-    while (index < text->length()) {
-      c = (*text)[index++];
-      // Is it an element we care about?
-      if (c == ' ' || c == '>') {
-	if (!substring.compare("route")) {
-	  parse_route();
-	} else if (!substring.compare("stop")) {
-	  parse_stop();
-	} else if (!substring.compare("direction")) {
-	  parse_direction();
-	}
-	substring.erase();
-	break;
-      } else {
-	substring += c;
-      }
-    }
+void RouteParser::element_open_actions() {
+  if (!substring.compare("route")) {
+    parse_route();
+  } else if (!substring.compare("stop")) {
+    parse_stop();
+  } else if (!substring.compare("direction")) {
+    parse_direction();
   }
 }
 
-void RouteParser::parse() {
-  while (index < text->length()) {
-    c = (*text)[index++];
-    if (c == '<') {
-      // Found an opening bracket
-      parse_element_open();
-    }
+void RouteParser::element_close_actions() {
+  if (!substring.compare("route")) {
+    // Route complete
+    routes.push_back(tempRoute);
+  } else if (!substring.compare("stop")) {
+    // Stop complete
+    std::cout << "ERROR: RouteParser::parse_element_open()"
+	      << std::endl;
+  } else if (!substring.compare("direction")) {
+    // Direction complete
+    tempRoute->directions.push_back(*tempDirection);
+    tempDirection = NULL;
   }
 }

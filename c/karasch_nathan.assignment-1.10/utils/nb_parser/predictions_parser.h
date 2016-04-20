@@ -46,19 +46,19 @@ class PredictionsParser : public XmlParser {
   Predictions *tempPredictions;
   Prediction *tempPrediction;
   std::string tempDirection;
-  void parse_element_open();
-  std::map<char, std::string> *parse_attributes();
   void parse_direction();
   void parse_predictions();
   void parse_prediction();
   void parse_message();
+  void element_open_actions();
+  void element_close_actions();
+  char key_from_string(std::string *str);
  public:
   std::vector<Predictions *> predictions;
   PredictionsParser(std::string &s) : XmlParser(s) {
     tempPredictions = NULL;
     tempPrediction = NULL;
   }
-  void parse();
   std::string results();
 };
 

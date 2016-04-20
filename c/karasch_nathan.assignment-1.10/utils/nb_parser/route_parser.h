@@ -17,11 +17,12 @@ class RouteParser : public XmlParser {
   Route *tempRoute;
   Stop *tempStop;
   Direction *tempDirection;
-  void parse_element_open();
-  std::map<char, std::string> *parse_attributes();
   void parse_direction();
   void parse_stop();
   void parse_route();
+  void element_open_actions();
+  void element_close_actions();
+  char key_from_string(std::string *str);
  public:
   std::vector<Route *> routes;
   RouteParser(std::string &s) : XmlParser(s) {
@@ -31,7 +32,6 @@ class RouteParser : public XmlParser {
   }
   std::vector<Route *> get_all_routes();
   Route get_route(std::string tag);
-  void parse();
 };
 
 #endif

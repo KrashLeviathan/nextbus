@@ -7,7 +7,7 @@
 #include "route.h"
 #include "io.h"
 
-static char key_from_string(std::string *str) {
+char PredictionsParser::key_from_string(std::string *str) {
   if (!str->compare("routeTag")) {
     return ATTR_ROUTE_TAG;
   } else if (!str->compare("routeTitle")) {
@@ -131,103 +131,21 @@ void PredictionsParser::parse_predictions() {
   tempPredictions->dirTitleBecauseNoPredictions = (*attributeMap)[ATTR_DIR_NO_PREDICTS];
 }
 
-std::map<char, std::string> *PredictionsParser::parse_attributes() {
-  std::map<char, std::string> *attributeMap = new map<char, std::string>();
-  char key;
-  bool readingValueString = false;
-  
-  substring.erase();
-
-  while (index < text->length()) {
-    c = (*text)[index++];
-    switch (c) {
-    case ' ':
-      if (!readingValueString) {
-	// New attribute coming up
-	substring.erase();
-      } else {
-	// The space is part of a string value
-	substring += c;
-      }
-      break;
-    case '=':
-      key = key_from_string(&substring);
-      break;
-    case '"':
-      if (readingValueString) {
-	(*attributeMap)[key] = substring;
-	readingValueString = false;
-      } else {
-	readingValueString = true;
-	substring.erase();
-      }
-      break;
-    case '>':
-      // Closing bracket found
-      substring.erase();
-      return attributeMap;
-    default:
-      substring += c;
-      break;
-    }
-  }
-  std::cout << IO_RED "ERROR: PredictionsParser::parse_attributes()"
-	    << IO_NORMAL << std::endl;
-  return attributeMap;
-}
-
-void PredictionsParser::parse_element_open() {
-  substring.erase();
-  c = (*text)[index++];
-  if (c == '/') {
-    // Element closing
-    substring.erase();
-    while (index < text->length()) {
-      c = (*text)[index++];
-      // Is it an element we care about?
-      if (c == ' ' || c == '>') {
-	if (!substring.compare("predictions")) {
-	  // Predictions complete
-	  predictions.push_back(tempPredictions);
-	}
-	substring.erase();
-	break;
-      } else {
-	substring += c;
-      }
-    }
-  } else {
-    // Element opening
-    substring.erase();
-    substring += c;
-    while (index < text->length()) {
-      c = (*text)[index++];
-      // Is it an element we care about?
-      if (c == ' ' || c == '>') {
-	if (!substring.compare("predictions")) {
-	  parse_predictions();
-	} else if (!substring.compare("prediction")) {
-	  parse_prediction();
-	} else if (!substring.compare("direction")) {
-	  parse_direction();
-	} else if (!substring.compare("message")) {
-	  parse_message();
-	}
-	substring.erase();
-	break;
-      } else {
-	substring += c;
-      }
-    }
+void PredictionsParser::element_open_actions() {
+  if (!substring.compare("predictions")) {
+    parse_predictions();
+  } else if (!substring.compare("prediction")) {
+    parse_prediction();
+  } else if (!substring.compare("direction")) {
+    parse_direction();
+  } else if (!substring.compare("message")) {
+    parse_message();
   }
 }
 
-void PredictionsParser::parse() {
-  while (index < text->length()) {
-    c = (*text)[index++];
-    if (c == '<') {
-      // Found an opening bracket
-      parse_element_open();
-    }
+void PredictionsParser::element_close_actions() {
+  if (!substring.compare("predictions")) {
+    // Predictions complete
+    predictions.push_back(tempPredictions);
   }
 }
