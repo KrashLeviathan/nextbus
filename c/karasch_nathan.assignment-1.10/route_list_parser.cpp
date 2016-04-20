@@ -12,6 +12,9 @@ char RouteListParser::key_from_string(std::string *str) {
     return ATTR_ROUTE_TAG;
   } else if (!str->compare("title")) {
     return ATTR_ROUTE_TITLE;
+  } else if (!str->compare("shouldRetry")) {
+    // Must have this one
+    return ATTR_ERROR_SHOULD_RETRY;
   } else {
     return 'Z';
   }

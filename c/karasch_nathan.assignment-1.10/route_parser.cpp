@@ -13,6 +13,9 @@ char RouteParser::key_from_string(std::string *str) {
     return ATTR_COLOR;
   } else if (!str->compare("oppositeColor")) {
     return ATTR_OPP_COLOR;
+  } else if (!str->compare("shouldRetry")) {
+    // Must have this one
+    return ATTR_ERROR_SHOULD_RETRY;
   } else {
     return 'Z';
   }

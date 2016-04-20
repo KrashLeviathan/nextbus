@@ -63,9 +63,9 @@ void action_schedule_list(CommandLineAction *clAction, ConfigFile *configFile) {
   std::string xml_string;
   
   xml_string = schedule(configFile->agency.c_str(), clAction->route.c_str());
-
   // TODO: Find a smart way to cache schedule data
-  // TODO: parse
+  // TODO: parse and display schedule data
+  std::cout << IO_RED "At this time, the --schedule command is not implemented!" IO_NORMAL << std::endl;
 }
 
 void action_predict_stop(CommandLineAction *clAction, ConfigFile *configFile) {

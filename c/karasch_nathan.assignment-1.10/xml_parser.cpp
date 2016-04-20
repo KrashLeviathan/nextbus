@@ -44,9 +44,16 @@ std::map<char, std::string> *XmlParser::parse_attributes() {
       break;
     }
   }
-  std::cout << IO_RED "ERROR: PredictionsParser::parse_attributes()"
+  std::cout << IO_RED "ERROR: XmlParser::parse_attributes()"
 	    << IO_NORMAL << std::endl;
   return attributeMap;
+}
+
+void XmlParser::parse_error() {
+  std::map<char, std::string> *attributeMap;
+
+  attributeMap = parse_attributes();
+  errorShouldRetry = (*attributeMap)[ATTR_ERROR_SHOULD_RETRY];
 }
 
 void XmlParser::parse_element_open() {
@@ -59,6 +66,13 @@ void XmlParser::parse_element_open() {
       c = (*text)[index++];
       // Is it an element we care about?
       if (c == ' ' || c == '>') {
+	if (!substring.compare("Error")) {
+	  // Error complete
+	  errorText = pText;
+	  std::cout << IO_RED "ERROR: "
+		    << errorText << IO_NORMAL
+		    << "Should Retry?  " << errorShouldRetry << std::endl;
+	}
 	element_close_actions();
 	substring.erase();
 	break;
@@ -74,11 +88,16 @@ void XmlParser::parse_element_open() {
       c = (*text)[index++];
       // Is it an element we care about?
       if (c == ' ' || c == '>') {
+	if (!substring.compare("Error")) {
+	  // Received Error from NextBus API
+	  parse_error();
+	}
 	element_open_actions();
 	substring.erase();
 	break;
       } else {
 	substring += c;
+	pText.erase();
       }
     }
   }
@@ -90,6 +109,8 @@ void XmlParser::parse() {
     if (c == '<') {
       // Found an opening bracket
       parse_element_open();
+    } else {
+      pText += c;
     }
   }
 }

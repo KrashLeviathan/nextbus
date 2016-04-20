@@ -14,6 +14,9 @@ char AgencyParser::key_from_string(std::string *str) {
     return ATTR_AGENCY_TITLE;
   } else if (!str->compare("regionTitle")) {
     return ATTR_AGENCY_REGION_TITLE;
+  } else if (!str->compare("shouldRetry")) {
+    // Must have this one
+    return ATTR_ERROR_SHOULD_RETRY;
   } else {
     return 'Z';
   }

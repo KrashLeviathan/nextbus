@@ -30,6 +30,9 @@ char PredictionsParser::key_from_string(std::string *str) {
     return ATTR_DIRECTION_TITLE;
   } else if (!str->compare("dirTitleBecauseNoPredictions")) {
     return ATTR_DIR_NO_PREDICTS;
+  } else if (!str->compare("shouldRetry")) {
+    // Must have this one
+    return ATTR_ERROR_SHOULD_RETRY;
   } else {
     return 'Z';
   }
