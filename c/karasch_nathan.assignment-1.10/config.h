@@ -27,14 +27,14 @@ class SavedRouteStop {
 
 class ConfigFile {
  public:
-  time_t lastChange; // TODO: refactor as lastUsage and implement
+  time_t lastUsage; // TODO: implement
   time_t lastRouteDownload; // TODO: implement
   std::string agency;
   std::vector<SavedRouteStop *> savedRouteStops;
 
   ConfigFile(std::string &filepath);
   bool update();
-  bool lastChangeExpired();
+  bool lastUsageExpired();
   bool lastRouteDownloadExpired();
 
  private:

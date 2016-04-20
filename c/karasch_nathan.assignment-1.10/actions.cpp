@@ -13,7 +13,7 @@ void action_agency_list(CommandLineAction *clAction, ConfigFile *configFile) {
   filepath = get_filepath("agencyList.xml");
   xml_string = get_file_contents(filepath);
   if (xml_string[0] != '<' ||
-      (configFile->lastChangeExpired() &&
+      (configFile->lastUsageExpired() &&
        !(clAction->actions & ACTION_CACHED)) ||
       clAction->actions & ACTION_ONLINE) {
     // The file doesn't exist, so get it from NextBus online API
@@ -39,7 +39,7 @@ void action_route_list(CommandLineAction *clAction, ConfigFile *configFile) {
   filepath = get_filepath("routeList.xml");
   xml_string = get_file_contents(filepath);
   if (xml_string[0] != '<' ||
-      (configFile->lastChangeExpired() &&
+      (configFile->lastUsageExpired() &&
        !(clAction->actions & ACTION_CACHED)) ||
       clAction->actions & ACTION_ONLINE) {
     // The file doesn't exist, so get it from NextBus online API

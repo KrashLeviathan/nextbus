@@ -13,8 +13,8 @@
 
 void ConfigFile::print_details() {
   int i;
-  std::cout << "Last Change" << std::endl;
-  std::cout << lastChange << std::endl;
+  std::cout << "Last Usage" << std::endl;
+  std::cout << lastUsage << std::endl;
   std::cout << "Last Route DL" << std::endl;
   std::cout << lastRouteDownload << std::endl;
   std::cout << "Agency" << std::endl;
@@ -47,7 +47,7 @@ ConfigFile::ConfigFile(std::string &file_path) {
       << std::endl << std::endl
       << IO_GREEN "Creating a new config file at "
       << filepath << IO_NORMAL << std::endl << std::endl;
-    lastChange = 0;
+    lastUsage = 0;
     lastRouteDownload = 0;
     agency = DEFAULT_AGENCY;
     update();
@@ -63,8 +63,8 @@ bool ConfigFile::update() {
     file << CONFIG_HEADER << std::endl;
     file << "version " << VERSION_NUMBER << std::endl << std::endl;
     
-    file << ":LAST CHANGE" << std::endl;
-    file << lastChange << std::endl << std::endl;
+    file << ":LAST USAGE" << std::endl;
+    file << lastUsage << std::endl << std::endl;
     
     file << ":LAST ROUTE DOWNLOAD" << std::endl;
     file << lastRouteDownload << std::endl << std::endl;
@@ -95,10 +95,10 @@ bool ConfigFile::parse() {
   CHECK_HEADING(CONFIG_HEADER);
   CHECK_HEADING("version " VERSION_NUMBER);
   getline(ss, line);
-  CHECK_HEADING(":LAST CHANGE");
+  CHECK_HEADING(":LAST USAGE");
   getline(ss, line);
   stringToInt = new std::stringstream(line);
-  *stringToInt >> lastChange;
+  *stringToInt >> lastUsage;
   delete stringToInt;
   getline(ss, line);
   CHECK_HEADING(":LAST ROUTE DOWNLOAD");
@@ -139,7 +139,7 @@ bool ConfigFile::parse() {
   return true;
 }
 
-bool ConfigFile::lastChangeExpired() {
+bool ConfigFile::lastUsageExpired() {
   // TODO
   return true;
 }

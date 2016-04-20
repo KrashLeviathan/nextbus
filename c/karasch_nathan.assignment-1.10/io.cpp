@@ -243,7 +243,7 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
         }
 	param_complete = true;
       } else { /* No dash */
-	// TODO: Take custom variables that were stored in the
+	// Take custom variables that were stored in the
 	// config file and fetch route information with them
 	cla->actions = cla->actions | ACTION_USE_SAVED;
 	cla->saveUses.push_back(new std::string(argv[i]));
