@@ -54,4 +54,6 @@ bin/
 *.iml
 *~
 /bin/
-.gitignore
+*.d
+TAGS
+nextbus
