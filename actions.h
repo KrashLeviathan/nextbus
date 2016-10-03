@@ -19,7 +19,7 @@ void action_predict_route(CommandLineAction *clAction,
 void action_save_custom(CommandLineAction *clAction,
 			ConfigFile *configFile);
 void action_use_saved(CommandLineAction *clAction,
-		      ConfigFile *configFile);
+		      ConfigFile *configFile, bool minutesOnly);
 void action_help();
 
 #endif

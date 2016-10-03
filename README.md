@@ -76,6 +76,7 @@ nextbus [
           [ -A | --AgencyStore  <agency>              ]
           [ -c | --cached                             ]
           [ -h | --help                               ]
+		  [ -m | --minutes      <save-name>           ]
           [ -o | --online                             ]
           [ -p | --predictstop  <stop>                ]
           [ -P | --PredictRoute <route> <stop>        ]
@@ -115,6 +116,11 @@ offline.
 
 Displays information from the README about how to use
 the program.
+
+### `-m | --minutes  <save-name>`
+
+Gets the predictions for a saved route/stop and displays
+only the minutes until the soonest bus arrives/departs.
 
 ### `-o | --online`
 

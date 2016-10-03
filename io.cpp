@@ -24,6 +24,8 @@ void usage() {
     << std::endl
     << "                 [ -h | --help                               ]"
     << std::endl
+    << "                 [ -m | --minutes      <save-name>           ]"
+    << std::endl
     << "                 [ -o | --online                             ]"
     << std::endl
     << "                 [ -p | --predictstop  <stop>                ]"
@@ -244,6 +246,19 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
 	  // Show help information
 	  cla->actions = cla->actions | ACTION_HELP;
 	  break;
+	case 'm':
+          if ((!long_arg && argv[i][2]) ||
+              (long_arg && strcmp(argv[i], "-minutes"))) {
+            usage();
+          }
+	  cla->actions = cla->actions | ACTION_MINUTES;
+          if ((argc > i + 1) && argv[i + 1][0] != '-') {
+            // Argument: save_name
+	    cla->saveUses.push_back(new std::string(argv[++i]));
+          } else {
+	    usage();
+	  }
+          break;
         default:
           usage();
         }

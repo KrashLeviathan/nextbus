@@ -103,7 +103,8 @@ void action_save_custom(CommandLineAction *clAction, ConfigFile *configFile) {
   configFile->update();
 }
 
-void action_use_saved(CommandLineAction *clAction, ConfigFile *configFile) {
+void action_use_saved(CommandLineAction *clAction, ConfigFile *configFile,
+		      bool minutesOnly) {
   bool saveUseFound;
   int i, j;
   std::string xml_string;
@@ -120,9 +121,13 @@ void action_use_saved(CommandLineAction *clAction, ConfigFile *configFile) {
 			 configFile->savedRouteStops[j]->route.c_str());
 	PredictionsParser parser (xml_string);
 	parser.parse();
-	std::cout << IO_GREEN << *clAction->saveUses[i]
-		  << IO_NORMAL << std::endl
-		  << parser.results() << std::endl;
+	if (minutesOnly) {
+	  std::cout << parser.minutes();
+	} else {
+	  std::cout << IO_GREEN << *clAction->saveUses[i]
+		    << IO_NORMAL << std::endl
+		    << parser.results() << std::endl;
+	}
       }
     }
     if (!saveUseFound) {

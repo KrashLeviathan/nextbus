@@ -61,6 +61,7 @@ class PredictionsParser : public XmlParser {
     tempPredictions = NULL;
     tempPrediction = NULL;
   }
+  std::string minutes();
   std::string results();
 };
 

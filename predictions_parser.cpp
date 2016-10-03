@@ -38,6 +38,23 @@ char PredictionsParser::key_from_string(std::string *str) {
   }
 }
 
+std::string PredictionsParser::minutes() {
+  std::stringstream ss;
+  
+  if (predictions.empty()) {
+    error("PredictionsParser::results()");
+  }
+  
+  if (predictions[0]->dirTitleBecauseNoPredictions.empty()) {
+    // Successful predictions results
+    ss << predictions[0]->predictions[0]->strMinutes;
+  } else {
+    // No predictions
+    ss << -1;
+  }
+  return ss.str();
+}
+
 std::string PredictionsParser::results() {
   std::stringstream ss;
   int i, j;

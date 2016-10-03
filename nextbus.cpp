@@ -58,7 +58,11 @@ int main(int argc, char *argv[]) {
   }
   if (clAction->actions & ACTION_USE_SAVED) {
     // Use a custom setting
-    action_use_saved(clAction, configFile);
+    action_use_saved(clAction, configFile, false);
+  }
+  if (clAction->actions & ACTION_MINUTES) {
+    // Print ONLY the minutes for a custom setting
+    action_use_saved(clAction, configFile, true);
   }
   if (clAction->actions == 0) {
     usage();
