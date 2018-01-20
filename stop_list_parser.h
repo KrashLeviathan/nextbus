@@ -16,7 +16,11 @@ public:
 
 class StopListParser : public XmlParser {
 private:
+  std::string routeTag;
+  std::string routeTitle;
   StopListing *tempStopListing;
+
+  void parse_route();
 
   void parse_stop();
 

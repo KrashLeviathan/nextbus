@@ -27,6 +27,10 @@ std::string StopListParser::results() {
     error("StopListParser::results()");
   }
 
+  ss << "Showing all stops for route " << IO_YELLOW
+     << routeTag << IO_NORMAL << " (" << routeTitle << ")"
+     << ": " << std::endl << std::endl;
+
   ss << IO_GREEN "STOP TITLE                     "
      << "(STOP TAG)" IO_NORMAL
      << std::endl << std::endl;
@@ -46,6 +50,14 @@ std::string StopListParser::results() {
   return ss.str();
 }
 
+void StopListParser::parse_route() {
+  std::map<char, std::string> *attributeMap;
+
+  attributeMap = parse_attributes();
+  routeTag = (*attributeMap)[ATTR_STOP_TAG];
+  routeTitle = (*attributeMap)[ATTR_STOP_TITLE];
+}
+
 void StopListParser::parse_stop() {
   std::map<char, std::string> *attributeMap;
 
@@ -58,6 +70,9 @@ void StopListParser::parse_stop() {
 }
 
 void StopListParser::element_open_actions() {
+  if (!substring.compare("route")) {
+    parse_route();
+  }
   if (!substring.compare("stop")) {
     parse_stop();
   }
