@@ -76,7 +76,7 @@ nextbus [
           [ -A | --AgencyStore  <agency>              ]
           [ -c | --cached                             ]
           [ -h | --help                               ]
-		  [ -m | --minutes      <save-name>           ]
+          [ -m | --minutes      <save-name>           ]
           [ -o | --online                             ]
           [ -p | --predictstop  <stop>                ]
           [ -P | --PredictRoute <route> <stop>        ]
