@@ -57,3 +57,5 @@ bin/
 *.d
 TAGS
 nextbus
+CMakeLists.txt
+cmake-build-debug/

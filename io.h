@@ -28,7 +28,7 @@
 # define ACTION_CACHED        0x00000200  // -c --cached
 # define ACTION_USE_SAVED     0x00000400  // <save_name>
 # define ACTION_MINUTES       0x00000800  // -m <save_name>
-# define ACTION_BIT13         0x00001000
+# define ACTION_LIST_STOPS    0x00001000  // -l --liststops
 # define ACTION_BIT14         0x00002000
 # define ACTION_BIT15         0x00004000
 # define ACTION_BIT16         0x00008000

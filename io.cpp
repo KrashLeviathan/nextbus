@@ -38,6 +38,8 @@ void usage() {
     << std::endl
     << "                 [ -s | --schedule     <route>               ]"
     << std::endl
+    << "                 [ -l | --liststops    <route>               ]"
+    << std::endl
     << "               ]" << std::endl;
   exit(1);
 }
@@ -186,6 +188,20 @@ CommandLineAction *parse_arguments(int argc, char **argv) {
           }
 	  cla->actions = cla->actions | ACTION_ROUTE_LIST;
           break;
+        case 'l':
+      // List stops
+          if ((!long_arg && argv[i][2]) ||
+              (long_arg && strcmp(argv[i], "-liststops"))) {
+            usage();
+          }
+      cla->actions = cla->actions | ACTION_LIST_STOPS;
+          if ((argc > i + 1) && argv[i + 1][0] != '-') {
+            // Argument: route
+        cla->route = argv[++i];
+          } else {
+        usage();
+      }
+      break;
         case 's':
 	  // List bus schedule
           if ((!long_arg && argv[i][2]) ||

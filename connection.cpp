@@ -30,6 +30,17 @@ std::string routeConfig(const char *agency, const char *optionalRouteTag) {
   return client.Get(ss.str());
 }
 
+std::string stopList(const char *agency, const char *routeTag) {
+  CURLplusplus client;
+  std::stringstream ss;
+  ss << "http://webservices.nextbus.com/service/publicXMLFeed"
+     << "?command=routeConfig&a=" << agency;
+  if (routeTag != NULL) {
+    ss << "&r=" << routeTag;
+  }
+  return client.Get(ss.str());
+}
+
 std::string predictions(const char *agency, const char *stopTag) {
   CURLplusplus client;
   std::stringstream ss;

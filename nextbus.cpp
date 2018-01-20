@@ -36,6 +36,10 @@ int main(int argc, char *argv[]) {
     // Route list
     action_route_list(clAction, configFile);
   }
+  if (clAction->actions & ACTION_LIST_STOPS) {
+    // List stops
+    action_list_stops(clAction, configFile);
+  }
   if (clAction->actions & ACTION_SCHEDULE_LIST) {
     // Schedules
     action_schedule_list(clAction, configFile);

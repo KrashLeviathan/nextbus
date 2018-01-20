@@ -83,6 +83,7 @@ nextbus [
           [ -r | --routes                             ]
           [ -S | --Save         <name> <route> <stop> ]
           [ -s | --schedule     <route>               ]
+          [ -l | --liststops    <route>               ]
         ]
 ```
 
@@ -159,3 +160,8 @@ Displays the bus schedule for the given route.
 
 Example: `nextbus -s 2E`
 
+### `-l | --liststops  <route>`
+
+Lists all stops for the given route.
+
+Example: `nextbus -l 2E`
