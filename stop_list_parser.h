@@ -10,23 +10,30 @@
 
 class StopListing {
 public:
-    std::string tag;
-    std::string title;
+  std::string tag;
+  std::string title;
 };
 
 class StopListParser : public XmlParser {
 private:
-    StopListing *tempStopListing;
-    void parse_stop();
-    void element_open_actions();
-    void element_close_actions();
-    char key_from_string(std::string *str);
+  StopListing *tempStopListing;
+
+  void parse_stop();
+
+  void element_open_actions();
+
+  void element_close_actions();
+
+  char key_from_string(std::string *str);
+
 public:
-    std::vector<StopListing *> stops;
-    StopListParser(std::string &s) : XmlParser(s) {
-        tempStopListing = NULL;
-    }
-    std::string results();
+  std::vector<StopListing *> stops;
+
+  StopListParser(std::string &s) : XmlParser(s) {
+    tempStopListing = NULL;
+  }
+
+  std::string results();
 };
 
 #endif

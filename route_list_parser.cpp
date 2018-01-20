@@ -23,7 +23,7 @@ char RouteListParser::key_from_string(std::string *str) {
 std::string RouteListParser::results() {
   std::stringstream ss;
   int i;
-  
+
   if (routes.empty()) {
     error("RouteListParser::results()");
   }

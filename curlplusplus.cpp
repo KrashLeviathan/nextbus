@@ -3,7 +3,7 @@
 #include <curl/curl.h>
 #include "curlplusplus.h"
 
-std::string CURLplusplus::Get(const std::string& url) {
+std::string CURLplusplus::Get(const std::string &url) {
   CURLcode res;
   curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
   curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
@@ -21,6 +21,6 @@ std::string CURLplusplus::Get(const std::string& url) {
 }
 
 size_t CURLplusplus::Write(void *buffer, size_t size, size_t nmemb) {
-  ss.write((const char*)buffer,size*nmemb);
-  return size*nmemb;
+  ss.write((const char *) buffer, size * nmemb);
+  return size * nmemb;
 }

@@ -75,6 +75,6 @@ int main(int argc, char *argv[]) {
   // Cleanup
   delete clAction;
   delete configFile;
-  
+
   return 0;
 }

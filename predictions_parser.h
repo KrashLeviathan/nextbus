@@ -20,7 +20,7 @@
 # define ATTR_DIR_NO_PREDICTS  'k'
 
 class Prediction {
- public:
+public:
   std::string strMinutes;
   std::string strEpochTime;
   std::string strIsDeparture;
@@ -29,11 +29,12 @@ class Prediction {
   int minutes;
   int epochTime;
   bool isDeparture;
+
   void applyStringValues();
 };
 
 class Predictions {
- public:
+public:
   std::string routeTag;
   std::string routeTitle;
   std::string stopTag;
@@ -44,24 +45,35 @@ class Predictions {
 };
 
 class PredictionsParser : public XmlParser {
- private:
+private:
   Predictions *tempPredictions;
   Prediction *tempPrediction;
   std::string tempDirection;
+
   void parse_direction();
+
   void parse_predictions();
+
   void parse_prediction();
+
   void parse_message();
+
   void element_open_actions();
+
   void element_close_actions();
+
   char key_from_string(std::string *str);
- public:
+
+public:
   std::vector<Predictions *> predictions;
+
   PredictionsParser(std::string &s) : XmlParser(s) {
     tempPredictions = NULL;
     tempPrediction = NULL;
   }
+
   std::string minutes();
+
   std::string results();
 };
 

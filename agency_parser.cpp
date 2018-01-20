@@ -1,7 +1,6 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include <string>
 #include <sstream>
 #include <iomanip>
 #include "agency_parser.h"
@@ -25,7 +24,7 @@ char AgencyParser::key_from_string(std::string *str) {
 std::string AgencyParser::results() {
   std::stringstream ss;
   int i;
-  
+
   if (agencies.empty()) {
     error("AgencyParser::results()");
   }

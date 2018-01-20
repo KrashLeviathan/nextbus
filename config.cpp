@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <sstream>
 #include "config.h"
 #include "io.h"
@@ -57,27 +56,27 @@ ConfigFile::ConfigFile(std::string &file_path) {
 bool ConfigFile::update() {
   std::ofstream file;
   int i;
-  
+
   file.open(filepath.c_str());
   if (file.is_open()) {
     file << CONFIG_HEADER << std::endl;
     file << "version " << VERSION_NUMBER << std::endl << std::endl;
-    
+
     file << ":LAST USAGE" << std::endl;
     file << lastUsage << std::endl << std::endl;
-    
+
     file << ":LAST ROUTE DOWNLOAD" << std::endl;
     file << lastRouteDownload << std::endl << std::endl;
-    
+
     file << ":AGENCY" << std::endl;
     file << agency << std::endl << std::endl;
 
     file << ":SAVED" << std::endl;
     if (!savedRouteStops.empty()) {
       for (i = 0; i < savedRouteStops.size(); i++) {
-	file << std::endl << "$" << savedRouteStops[i]->name << std::endl;
-	file << "route=" << savedRouteStops[i]->route << std::endl;
-	file << "stop=" << savedRouteStops[i]->stop << std::endl;
+        file << std::endl << "$" << savedRouteStops[i]->name << std::endl;
+        file << "route=" << savedRouteStops[i]->route << std::endl;
+        file << "stop=" << savedRouteStops[i]->stop << std::endl;
       }
     }
     file.close();
@@ -87,13 +86,14 @@ bool ConfigFile::update() {
 }
 
 bool ConfigFile::parse() {
-  std::stringstream ss (contents);
+  std::stringstream ss(contents);
   std::stringstream *stringToInt;
   std::string line;
   SavedRouteStop *savedRS;
 
   CHECK_HEADING(CONFIG_HEADER);
-  CHECK_HEADING("version " VERSION_NUMBER);
+  CHECK_HEADING("version "
+                  VERSION_NUMBER);
   getline(ss, line);
   CHECK_HEADING(":LAST USAGE");
   getline(ss, line);
@@ -117,21 +117,21 @@ bool ConfigFile::parse() {
       // If the line is not empty...
       savedRS = new SavedRouteStop();
       if (line[0] == '$') {
-	savedRS->name = line.substr(1, std::string::npos);
+        savedRS->name = line.substr(1, std::string::npos);
       } else {
-	return false;
+        return false;
       }
       getline(ss, line);
       if (!line.substr(0, 6).compare("route=")) {
-	savedRS->route = line.substr(6, std::string::npos);
+        savedRS->route = line.substr(6, std::string::npos);
       } else {
-	return false;
+        return false;
       }
       getline(ss, line);
       if (!line.substr(0, 5).compare("stop=")) {
-	savedRS->stop = line.substr(5, std::string::npos);
+        savedRS->stop = line.substr(5, std::string::npos);
       } else {
-	return false;
+        return false;
       }
       savedRouteStops.push_back(savedRS);
     }

@@ -50,7 +50,7 @@ std::string predictions(const char *agency, const char *stopTag) {
 }
 
 std::string predictions(const char *agency, const char *stopTag,
-			const char *routeTag) {
+                        const char *routeTag) {
   CURLplusplus client;
   std::stringstream ss;
   ss << "http://webservices.nextbus.com/service/publicXMLFeed"
@@ -61,7 +61,7 @@ std::string predictions(const char *agency, const char *stopTag,
 
 // TODO: Maybe this can get implemented someday, but not now
 std::string predictionsForMultiStops(const char *agency,
-			     std::vector<std::string> stopTagVector) {
+                                     std::vector<std::string> stopTagVector) {
   CURLplusplus client;
   std::stringstream ss;
   ss << "http://webservices.nextbus.com/service/publicXMLFeed"

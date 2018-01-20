@@ -40,11 +40,11 @@ char PredictionsParser::key_from_string(std::string *str) {
 
 std::string PredictionsParser::minutes() {
   std::stringstream ss;
-  
+
   if (predictions.empty()) {
     error("PredictionsParser::results()");
   }
-  
+
   if (predictions[0]->dirTitleBecauseNoPredictions.empty()) {
     // Successful predictions results
     ss << predictions[0]->predictions[0]->strMinutes;
@@ -59,36 +59,36 @@ std::string PredictionsParser::results() {
   std::stringstream ss;
   int i, j;
   std::string direction;
-  
+
   if (predictions.empty()) {
     error("PredictionsParser::results()");
   }
-  
+
   if (predictions[0]->dirTitleBecauseNoPredictions.empty()) {
     // Successful predictions results
     for (i = 0; i < predictions.size(); i++) {
       ss << "NEXTBUS PREDICTIONS:" << std::endl << std::endl
-	 << "   Route:   " << predictions[i]->routeTitle
-	 << " (" IO_YELLOW << predictions[i]->routeTag
-	 << IO_NORMAL ")" << std::endl
-	 << "   Stop:    " << predictions[i]->stopTitle
-	 << " (" IO_YELLOW << predictions[i]->stopTag
-	 << IO_NORMAL ")" << std::endl;
+         << "   Route:   " << predictions[i]->routeTitle
+         << " (" IO_YELLOW << predictions[i]->routeTag
+         << IO_NORMAL ")" << std::endl
+         << "   Stop:    " << predictions[i]->stopTitle
+         << " (" IO_YELLOW << predictions[i]->stopTag
+         << IO_NORMAL ")" << std::endl;
       for (j = 0; j < predictions[i]->predictions.size(); j++) {
-	if (direction.compare(predictions[i]
-			      ->predictions[j]->directionTitle)) {
-	  direction = predictions[i]->predictions[j]->directionTitle;
-	  ss << std::endl << "      Direction:  " << direction
-	     << std::endl;
-	}
-	ss << "                  Minutes until "
-	   << ((predictions[i]->predictions[j]->isDeparture) ?
-	       "departure:  " : "arrival:    ")
-	   << predictions[i]->predictions[j]->strMinutes << std::endl;
+        if (direction.compare(predictions[i]
+                                ->predictions[j]->directionTitle)) {
+          direction = predictions[i]->predictions[j]->directionTitle;
+          ss << std::endl << "      Direction:  " << direction
+             << std::endl;
+        }
+        ss << "                  Minutes until "
+           << ((predictions[i]->predictions[j]->isDeparture) ?
+               "departure:  " : "arrival:    ")
+           << predictions[i]->predictions[j]->strMinutes << std::endl;
       }
       ss << std::endl
-	 << "   Messages:" << std::endl
-	 << predictions[i]->messageText << std::endl;
+         << "   Messages:" << std::endl
+         << predictions[i]->messageText << std::endl;
     }
   } else {
     // No predictions
@@ -108,8 +108,8 @@ std::string PredictionsParser::results() {
 }
 
 void Prediction::applyStringValues() {
-  std::stringstream ss1 (strMinutes);
-  std::stringstream ss2 (strEpochTime);
+  std::stringstream ss1(strMinutes);
+  std::stringstream ss2(strEpochTime);
   ss1 >> minutes;
   ss2 >> epochTime;
   isDeparture = (!strIsDeparture.compare("true"));
@@ -143,7 +143,7 @@ void PredictionsParser::parse_prediction() {
   tempPrediction->strIsDeparture = (*attributeMap)[ATTR_IS_DEPARTURE];
 
   tempPrediction->applyStringValues();
-  
+
   tempPredictions->predictions.push_back(tempPrediction);
 }
 

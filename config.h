@@ -13,34 +13,41 @@
 # define DAYS_TO_EXPIRE        1
 
 class SavedRouteStop {
- public:
+public:
   std::string name;
   std::string route;
   std::string stop;
+
   SavedRouteStop(std::string n, std::string r, std::string s) {
     name = n;
     route = r;
     stop = s;
   }
+
   SavedRouteStop() {}
 };
 
 class ConfigFile {
- public:
+public:
   time_t lastUsage; // TODO: implement
   time_t lastRouteDownload; // TODO: implement
   std::string agency;
   std::vector<SavedRouteStop *> savedRouteStops;
 
   ConfigFile(std::string &filepath);
+
   bool update();
+
   bool lastUsageExpired();
+
   bool lastRouteDownloadExpired();
 
- private:
+private:
   std::string filepath;
   std::string contents;
+
   bool parse();
+
   void print_details();
 };
 

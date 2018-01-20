@@ -52,21 +52,27 @@
 typedef uint32_t Action;
 
 class CommandLineAction {
- public:
+public:
   std::string agency;
   std::string route;
   std::string stop;
   std::string save;
   std::vector<std::string *> saveUses;
   Action actions;
+
   std::string to_string();
 };
 
 void usage();
+
 void error(const char *message);
+
 std::string get_file_contents(std::string &filepath);
+
 bool set_file_contents(std::string &filepath, std::string &contents);
+
 std::string get_filepath(const char *filename);
+
 CommandLineAction *parse_arguments(int argc, char *argv[]);
 
 #endif

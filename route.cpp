@@ -14,8 +14,8 @@ Stop *Route::find_stop(std::string &tag) {
 }
 
 std::string Stop::to_string() {
-  std::string str ("        Stop: ");
-  
+  std::string str("        Stop: ");
+
   str += tag;
   str += ", ";
   str += title;
@@ -25,8 +25,8 @@ std::string Stop::to_string() {
 
 std::string Direction::to_string() {
   std::vector<Stop *>::iterator stopIt;
-  std::string str ("    Direction: ");
-  
+  std::string str("    Direction: ");
+
   str += tag;
   str += ", ";
   str += title;
@@ -40,8 +40,8 @@ std::string Direction::to_string() {
 std::string Route::to_string() {
   std::vector<Stop>::iterator stopIt;
   std::vector<Direction>::iterator dirIt;
-  std::string str ("Route: ");
-  
+  std::string str("Route: ");
+
   str += tag;
   str += ", ";
   str += title;

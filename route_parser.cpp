@@ -2,7 +2,6 @@
 #include <map>
 #include <vector>
 #include "route_parser.h"
-#include "route.h"
 
 char RouteParser::key_from_string(std::string *str) {
   if (!str->compare("tag")) {
@@ -79,7 +78,7 @@ void RouteParser::element_close_actions() {
   } else if (!substring.compare("stop")) {
     // Stop complete
     std::cout << "ERROR: RouteParser::parse_element_open()"
-	      << std::endl;
+              << std::endl;
   } else if (!substring.compare("direction")) {
     // Direction complete
     tempRoute->directions.push_back(*tempDirection);

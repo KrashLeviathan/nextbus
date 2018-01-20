@@ -9,23 +9,30 @@
 # define ATTR_ROUTE_TITLE         'b'
 
 class RouteListing {
- public:
+public:
   std::string tag;
   std::string title;
 };
 
 class RouteListParser : public XmlParser {
- private:
+private:
   RouteListing *tempRouteListing;
+
   void parse_route();
+
   void element_open_actions();
+
   void element_close_actions();
+
   char key_from_string(std::string *str);
- public:
+
+public:
   std::vector<RouteListing *> routes;
+
   RouteListParser(std::string &s) : XmlParser(s) {
     tempRouteListing = NULL;
   }
+
   std::string results();
 };
 

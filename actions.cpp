@@ -15,7 +15,7 @@
 void action_agency_list(CommandLineAction *clAction, ConfigFile *configFile) {
   std::string filepath;
   std::string xml_string;
-  
+
   filepath = get_filepath("agencyList.xml");
   xml_string = get_file_contents(filepath);
   if (xml_string[0] != '<' ||
@@ -26,7 +26,7 @@ void action_agency_list(CommandLineAction *clAction, ConfigFile *configFile) {
     xml_string = agencyList();
     set_file_contents(filepath, xml_string);
   }
-  AgencyParser parser (xml_string);
+  AgencyParser parser(xml_string);
   parser.parse();
   std::cout << parser.results() << std::endl;
 }
@@ -35,14 +35,14 @@ void action_agency_store(CommandLineAction *clAction, ConfigFile *configFile) {
   configFile->agency = clAction->agency;
   configFile->update();
   std::cout << IO_GREEN "Configuration Change:" IO_NORMAL << std::endl
-	    << "   Agency set to '"
-	    << configFile->agency << "'." << std::endl;
+            << "   Agency set to '"
+            << configFile->agency << "'." << std::endl;
 }
 
 void action_route_list(CommandLineAction *clAction, ConfigFile *configFile) {
   std::string filepath;
   std::string xml_string;
-  
+
   filepath = get_filepath("routeList.xml");
   xml_string = get_file_contents(filepath);
   if (xml_string[0] != '<' ||
@@ -53,7 +53,7 @@ void action_route_list(CommandLineAction *clAction, ConfigFile *configFile) {
     xml_string = routeList(configFile->agency.c_str());
     set_file_contents(filepath, xml_string);
   }
-  RouteListParser parser (xml_string);
+  RouteListParser parser(xml_string);
   parser.parse();
   std::cout << parser.results() << std::endl;
   // TODO: Route Config?
@@ -67,14 +67,14 @@ void action_list_stops(CommandLineAction *clAction, ConfigFile *configFile) {
   filepath = get_filepath("stopList.xml");
   xml_string = stopList(configFile->agency.c_str(), clAction->route.c_str());
   set_file_contents(filepath, xml_string);
-  StopListParser parser (xml_string);
+  StopListParser parser(xml_string);
   parser.parse();
   std::cout << parser.results() << std::endl;
 }
 
 void action_schedule_list(CommandLineAction *clAction, ConfigFile *configFile) {
   std::string xml_string;
-  
+
   xml_string = schedule(configFile->agency.c_str(), clAction->route.c_str());
   // TODO: Find a smart way to cache schedule data
   // TODO: parse and display schedule data
@@ -87,9 +87,9 @@ void action_predict_stop(CommandLineAction *clAction, ConfigFile *configFile) {
 
   filepath = get_filepath("lastPrediction.xml");
   xml_string = predictions(configFile->agency.c_str(),
-			   clAction->stop.c_str());
+                           clAction->stop.c_str());
   set_file_contents(filepath, xml_string);
-  PredictionsParser parser (xml_string);
+  PredictionsParser parser(xml_string);
   parser.parse();
   std::cout << parser.results() << std::endl;
 }
@@ -100,10 +100,10 @@ void action_predict_route(CommandLineAction *clAction, ConfigFile *configFile) {
 
   filepath = get_filepath("lastPrediction.xml");
   xml_string = predictions(configFile->agency.c_str(),
-			   clAction->stop.c_str(),
-			   clAction->route.c_str());
+                           clAction->stop.c_str(),
+                           clAction->route.c_str());
   set_file_contents(filepath, xml_string);
-  PredictionsParser parser (xml_string);
+  PredictionsParser parser(xml_string);
   parser.parse();
   std::cout << parser.results() << std::endl;
 }
@@ -111,42 +111,42 @@ void action_predict_route(CommandLineAction *clAction, ConfigFile *configFile) {
 void action_save_custom(CommandLineAction *clAction, ConfigFile *configFile) {
   configFile->savedRouteStops
     .push_back(new SavedRouteStop(clAction->save,
-				  clAction->route,
-				  clAction->stop));
+                                  clAction->route,
+                                  clAction->stop));
   configFile->update();
 }
 
 void action_use_saved(CommandLineAction *clAction, ConfigFile *configFile,
-		      bool minutesOnly) {
+                      bool minutesOnly) {
   bool saveUseFound;
   int i, j;
   std::string xml_string;
-  
+
   for (i = 0; i < clAction->saveUses.size(); i++) {
     saveUseFound = false;
     for (j = 0; j < configFile->savedRouteStops.size()
-	   && !saveUseFound; j++) {
+                && !saveUseFound; j++) {
       if (!configFile->savedRouteStops[j]->name.compare(
-					*clAction->saveUses[i])) {
-	saveUseFound = true;
-	xml_string = predictions(configFile->agency.c_str(),
-			 configFile->savedRouteStops[j]->stop.c_str(),
-			 configFile->savedRouteStops[j]->route.c_str());
-	PredictionsParser parser (xml_string);
-	parser.parse();
-	if (minutesOnly) {
-	  std::cout << parser.minutes();
-	} else {
-	  std::cout << IO_GREEN << *clAction->saveUses[i]
-		    << IO_NORMAL << std::endl
-		    << parser.results() << std::endl;
-	}
+        *clAction->saveUses[i])) {
+        saveUseFound = true;
+        xml_string = predictions(configFile->agency.c_str(),
+                                 configFile->savedRouteStops[j]->stop.c_str(),
+                                 configFile->savedRouteStops[j]->route.c_str());
+        PredictionsParser parser(xml_string);
+        parser.parse();
+        if (minutesOnly) {
+          std::cout << parser.minutes();
+        } else {
+          std::cout << IO_GREEN << *clAction->saveUses[i]
+                    << IO_NORMAL << std::endl
+                    << parser.results() << std::endl;
+        }
       }
     }
     if (!saveUseFound) {
       std::cout << IO_RED "No saved route/stop was found for '"
-		<< *clAction->saveUses[i] << "'." IO_NORMAL << std::endl
-		<< std::endl;
+                << *clAction->saveUses[i] << "'." IO_NORMAL << std::endl
+                << std::endl;
     }
   }
 }
